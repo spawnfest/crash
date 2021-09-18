@@ -84,12 +84,12 @@ defmodule Crash.Build.Engine do
   @spec status(integer) :: {:ok, Build.t()} | {:error, any}
   def status(build_id) do
     case :global.whereis_name(:"#{build_id}") do
-      nil ->
-        {:error, :build_not_found}
-
-      pid ->
+      pid when is_pid(pid) ->
         build = GenServer.call(pid, :status)
         {:ok, build}
+
+      _ ->
+        {:error, :build_not_found}
     end
   end
 

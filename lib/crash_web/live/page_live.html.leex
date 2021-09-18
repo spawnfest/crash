@@ -128,9 +128,9 @@
           <ul>
             <%= for current_step <- @build.completed_steps do %>
               <li>
-                <div class="w-full h-full overflow-y-auto bg-white shadow-md md">
+                <div class="w-full h-full overflow-y-auto bg-white shadow-md md border-b border-gray-200 cursor-pointer hover:bg-gray-200">
                 <button phx-click="step-details" phx-value-step="<%= current_step.name %>">
-                  <div class="flex items-center w-full p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-200">
+                  <div class="flex items-center w-full p-4">
                     <span class="whitespace-normal">
                       <%= current_step.name %>
                     </span>
@@ -141,12 +141,16 @@
             <% end %>
           </ul>
           <div class="hidden w-full h-full overflow-y-auto bg-gray-800 shadow-md md:block md:w-9/12">
-            <p class="p-4 text-white opacity-70"> <%= @step.commands %> <p>
+            <p class="p-2 text-white opacity-70">
+              <%= for command <- @step.commands do %>
+                <p class="text-white"> <%= command %> </p>
+              <% end %>
+            </p>
           </div>
         </div>
       </div>
     </div>
 
-<% end %>
+  <% end %>
 
 </section>
