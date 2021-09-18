@@ -17,3 +17,6 @@ RUN apk add --no-cache \
 RUN mix local.hex --force && mix local.rebar --force
 
 ENV ERL_AFLAGS "-kernel shell_history enabled"
+
+EXPOSE 4000
+EXPOSE 4369
