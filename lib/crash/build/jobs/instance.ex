@@ -35,7 +35,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
       logs: %{}
     }
 
-    GenServer.start_link(__MODULE__, state, name: state.process_uuid)
+    GenServer.start_link(__MODULE__, state, name: {:global, state.process_uuid})
   end
 
   @doc """

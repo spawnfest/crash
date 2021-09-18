@@ -1,164 +1,151 @@
 <section class="phx-hero">
 
-<div class="flex-grow w-full mx-auto xl:flex">
-  <div class="min-w-0 bg-white border-r border-gray-200">
-    <div class="bg-white lg:min-w-0 lg:flex-1">
-      <div class="pt-4 pb-4 pl-4 pr-6 border-t border-b border-gray-200 sm:pl-6 lg:pl-8">
-        <div class="flex items-center mt-4">
-          <h1 class="flex-1 text-lg font-medium">Projects</h1>
+  <div class="flex-grow w-full mx-auto xl:flex">
+    <div class="min-w-0 bg-white border-r border-gray-200">
+      <div class="bg-white lg:min-w-0 lg:flex-1">
+        <div class="pt-4 pb-4 pl-4 pr-6 border-t border-b border-gray-200 sm:pl-6 lg:pl-8">
+          <div class="flex items-center mt-4">
+            <h1 class="flex-1 text-lg font-medium">Projects</h1>
+          </div>
         </div>
-      </div>
-      <ul class="relative z-0 border-b border-gray-200 divide-y divide-gray-200"
-
+        <ul class="relative z-0 border-b border-gray-200 divide-y divide-gray-200"
           <%= for build <- @builds do %>
-
-        <li class="relative py-5 pl-4 pr-6 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8">
-          <div class="flex items-center justify-between space-x-4">
-            <div class="min-w-0 space-y-3">
-              <div class="flex items-center space-x-3">
-                <span class="flex items-center justify-center w-4 h-4 bg-green-100 rounded-full" aria-hidden="true">
-                  <span class="w-2 h-2 bg-green-400 rounded-full"></span>
-                </span>
-                <span class="block">
-                  <h2 class="text-sm font-medium">
-                    <a href="#">
-                      <span class="absolute inset-0" aria-hidden="true"></span>
-                      Build id: <%= build.id %>
-                    </a>
-                  </h2>
-                </span>
-              </div>
-              <a href="#" class="relative group flex items-center space-x-2.5">
-                <svg class="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99917 0C4.02996 0 0 4.02545 0 8.99143C0 12.9639 2.57853 16.3336 6.15489 17.5225C6.60518 17.6053 6.76927 17.3277 6.76927 17.0892C6.76927 16.8762 6.76153 16.3104 6.75711 15.5603C4.25372 16.1034 3.72553 14.3548 3.72553 14.3548C3.31612 13.316 2.72605 13.0395 2.72605 13.0395C1.9089 12.482 2.78793 12.4931 2.78793 12.4931C3.69127 12.5565 4.16643 13.4198 4.16643 13.4198C4.96921 14.7936 6.27312 14.3968 6.78584 14.1666C6.86761 13.5859 7.10022 13.1896 7.35713 12.965C5.35873 12.7381 3.25756 11.9665 3.25756 8.52116C3.25756 7.53978 3.6084 6.73667 4.18411 6.10854C4.09129 5.88114 3.78244 4.96654 4.27251 3.72904C4.27251 3.72904 5.02778 3.48728 6.74717 4.65082C7.46487 4.45101 8.23506 4.35165 9.00028 4.34779C9.76494 4.35165 10.5346 4.45101 11.2534 4.65082C12.9717 3.48728 13.7258 3.72904 13.7258 3.72904C14.217 4.96654 13.9082 5.88114 13.8159 6.10854C14.3927 6.73667 14.7408 7.53978 14.7408 8.52116C14.7408 11.9753 12.6363 12.7354 10.6318 12.9578C10.9545 13.2355 11.2423 13.7841 11.2423 14.6231C11.2423 15.8247 11.2313 16.7945 11.2313 17.0892C11.2313 17.3299 11.3937 17.6097 11.8501 17.522C15.4237 16.3303 18 12.9628 18 8.99143C18 4.02545 13.97 0 8.99917 0Z" fill="currentcolor" />
-                </svg>
-                <span class="text-sm font-medium text-gray-500 truncate group-hover:text-gray-900">
-                  <%= build.repository.full_name %>
-                </span>
-              </a>
-            </div>
-            <div class="flex-col items-end flex-shrink-0 hidden space-y-3 sm:flex">
-              <p class="flex items-center space-x-4">
-                <i class="far fa-folder"></i>
-              </p>
-              <p class="flex space-x-2 text-sm text-gray-500">
-                <span aria-hidden="true">&middot;</span>
-                <span>Last deploy 3h ago</span>
-              </p>
-            </div>
-          </div>
-          <div class="flex-1 h-screen bg-yellow-100">
-
-
-
-            <div class="px-6 py-4">
-            <div class="flex items-center mt-5">
-              <h1 class="flex-1 text-lg font-medium">Current Commit: <span class="text-yellow-700">#9</span> </h1>
-            </div>
-          </div>
-            <div class="relative">
-              <ul>
-                <li class="md:px-6 md:py-4">
-                  <div class="flex space-x-3 ">
-                    <div class="relative flex-1 p-4 transition delay-75 bg-white border border-gray-200 sm:flex-shrink">
-                      <div class="flex flex-col space-y-5 md:space-y-1 md:items-center md:justify-between md:flex-row">
-                        <div class="flex flex-col space-y-3">
-                          <div class="flex flex-row items-center">
-                            <span class="flex items-center justify-center w-4 h-4 bg-gray-200 rounded-full animate-pulse" aria-hidden="true">
-                              <span class="w-2 h-2 bg-gray-500 rounded-full"></span>
-                            </span>
-                            <span class="block w-40 ml-3 text-sm font-medium truncate">branch/branch/braanch</span>
-                          </div>
-                          <div class="flex flex-row items-center">
-                            <i class="text-sm text-gray-500 fas fa-crop-alt fa-fw"></i>
-                            <span class="block w-40 ml-3 text-sm truncate">
-                              compare: <span>6113728f27a</span>
-                            </span>
-                          </div>
-                          <div class="flex items-center">
-                            <span class="inline-block w-4 h-4 overflow-hidden bg-gray-100 rounded-full">
-                              <svg class="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                              </svg>
-                            </span>
-                            <span class="block w-20 ml-3 text-sm truncate">Pippo Pluto</span>
-                          </div>
-                        </div>
-                        <div class="flex flex-col space-y-3">
-                          <div class="flex flex-row">
-                            <i class="mr-2 text-lg fas fa-long-arrow-alt-right fa-fw"></i>
-                            <h3 class="block w-64 text-sm truncate">
-                              <%= build.repository.commit.message %>
-                            </h3>
-                          </div>
-                          <div class="flex flex-row">
-                            <i class="mr-2 text-lg fas fa-arrows-alt-h fa-fw"></i>
-                            <span class="block w-64 text-sm truncate">
-                              commit: <%= build.repository.commit.sha %>
-                            </span>
-                          </div>
-                          <div class="flex flex-row text-gray-500">
-                            <i class="mr-2 text-lg far fa-pause-circle fa-fw"></i>
-                            <span class="block text-sm font-semibold ">
-                            #9 pending
-                            </span>
-                          </div>
-                        </div>
-                        <div class="space-y-3 sm:hidden lg:block">
-                          <span class="block text-sm tracking-wide">
-                            <i class="mr-2 far fa-clock fa-fw"></i>
-                            Ran for <span> 2m 30sec</span>
-                          </span>
-                          <span class="block text-sm">
-                            <i class="mr-2 fas fa-calendar-week fa-fw"></i>
-                            1 day ago
-                          </span>
-                        </div>
-                        <div class="space-y-3 sm:mr-1 lg:mr-4">
-                          <span class="block text-sm tracking-wide text-yellow-500">
-                            <button class="transition delay-75 hover:text-yellow-600">
-                              <i class="text-lg fas fa-sync-alt"></i>
-                            </button>
-                          </span>
-                        </div>
-                      </div>
-
-                    </div>
+              <button phx-click="build-details" phx-value-build="<%= build.id %>">cancel</button>
+              <li class="relative py-5 pl-4 pr-6 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8">
+              <div class="flex items-center justify-between space-x-4">
+                <div class="min-w-0 space-y-3">
+                  <div class="flex items-center space-x-3">
+                    <span class="flex items-center justify-center w-4 h-4 bg-green-100 rounded-full" aria-hidden="true">
+                      <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                    </span>
+                    <span class="block">
+                      <h2 class="text-sm font-medium">
+                        <a href="#">
+                          <span class="absolute inset-0" aria-hidden="true"></span>
+                          Build id: <%= build.id %>
+                        </a>
+                      </h2>
+                    </span>
                   </div>
-                </li>
-              </ul>
-            </div>
-            <div class="flex flex-col mt-12 md:px-6 md:py-4 h-3/6 md:flex-row">
-              <div class="w-full h-full overflow-y-auto bg-white shadow-md md:w-3/12">
-                <div class="flex items-center w-full p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-200">
-                  <svg class="w-5 h-5 mr-3 animate-spin" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  <ul>
-                    <%= for step <- build.completed_steps do %>
-                    <li>
-                      <p> <%= step.name %> </p>
-                    </li>
-                    <% end %>
-                  </ul>
+                  <a href="#" class="relative group flex items-center space-x-2.5">
+                    <svg class="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99917 0C4.02996 0 0 4.02545 0 8.99143C0 12.9639 2.57853 16.3336 6.15489 17.5225C6.60518 17.6053 6.76927 17.3277 6.76927 17.0892C6.76927 16.8762 6.76153 16.3104 6.75711 15.5603C4.25372 16.1034 3.72553 14.3548 3.72553 14.3548C3.31612 13.316 2.72605 13.0395 2.72605 13.0395C1.9089 12.482 2.78793 12.4931 2.78793 12.4931C3.69127 12.5565 4.16643 13.4198 4.16643 13.4198C4.96921 14.7936 6.27312 14.3968 6.78584 14.1666C6.86761 13.5859 7.10022 13.1896 7.35713 12.965C5.35873 12.7381 3.25756 11.9665 3.25756 8.52116C3.25756 7.53978 3.6084 6.73667 4.18411 6.10854C4.09129 5.88114 3.78244 4.96654 4.27251 3.72904C4.27251 3.72904 5.02778 3.48728 6.74717 4.65082C7.46487 4.45101 8.23506 4.35165 9.00028 4.34779C9.76494 4.35165 10.5346 4.45101 11.2534 4.65082C12.9717 3.48728 13.7258 3.72904 13.7258 3.72904C14.217 4.96654 13.9082 5.88114 13.8159 6.10854C14.3927 6.73667 14.7408 7.53978 14.7408 8.52116C14.7408 11.9753 12.6363 12.7354 10.6318 12.9578C10.9545 13.2355 11.2423 13.7841 11.2423 14.6231C11.2423 15.8247 11.2313 16.7945 11.2313 17.0892C11.2313 17.3299 11.3937 17.6097 11.8501 17.522C15.4237 16.3303 18 12.9628 18 8.99143C18 4.02545 13.97 0 8.99917 0Z" fill="currentcolor" />
+                    </svg>
+                    <span class="text-sm font-medium text-gray-500 truncate group-hover:text-gray-900">
+                      <%= build.repository.full_name %>
+                    </span>
+                  </a>
+                </div>
+                <div class="flex-col items-end flex-shrink-0 hidden space-y-3 sm:flex">
+                  <p class="flex space-x-2 text-sm text-gray-500">
+                    <span aria-hidden="true">&middot;</span>
+                    <span>Last deploy 3h ago</span>
+                  </p>
                 </div>
               </div>
-              <div class="hidden w-full h-full overflow-y-auto bg-gray-800 shadow-md md:block md:w-9/12">
-                Lorem ipsum (build step detail)
+            </li>
+        <% end %>
+        </ul>
+    </div>
+  </div>
+
+  <%= if !is_nil(@build) do %>
+
+    <div class="flex-1 h-screen bg-yellow-100">
+      <div class="px-6 py-4">
+      <div class="flex items-center mt-5">
+        <h1 class="flex-1 text-lg font-medium">Current Commit: <span class="text-yellow-700"><%= @build.repository.commit.sha %></span> </h1>
+      </div>
+      </div>
+        <div class="relative">
+          <ul>
+            <li class="md:px-6 md:py-4">
+              <div class="flex space-x-3 ">
+                <div class="relative flex-1 p-4 transition delay-75 bg-white border border-gray-200 sm:flex-shrink">
+                  <div class="flex flex-col space-y-5 md:space-y-1 md:items-center md:justify-between md:flex-row">
+                    <div class="flex flex-col space-y-3">
+                      <div class="flex flex-row items-center">
+                        <span class="flex items-center justify-center w-4 h-4 bg-gray-200 rounded-full animate-pulse" aria-hidden="true">
+                          <span class="w-2 h-2 bg-gray-500 rounded-full"></span>
+                        </span>
+                        <span class="block w-40 ml-3 text-sm font-medium truncate">branch/branch/braanch</span>
+                      </div>
+                      <div class="flex flex-row items-center">
+                        <i class="text-sm text-gray-500 fas fa-crop-alt fa-fw"></i>
+                        <span class="block w-40 ml-3 text-sm truncate">
+                          compare: <span>6113728f27a</span>
+                        </span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="inline-block w-4 h-4 overflow-hidden bg-gray-100 rounded-full">
+                          <svg class="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                          </svg>
+                        </span>
+                        <span class="block w-20 ml-3 text-sm truncate">Pippo Pluto</span>
+                      </div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                      <div class="flex flex-row">
+                        <i class="mr-2 text-lg fas fa-long-arrow-alt-right fa-fw"></i>
+                        <h3 class="block w-64 text-sm truncate">
+                          Feat: Add sosssdddddssssssssssssssssssddddddddddddddddddddsssssme shit
+                        </h3>
+                      </div>
+                      <div class="flex flex-row">
+                        <i class="mr-2 text-lg fas fa-arrows-alt-h fa-fw"></i>
+                        <span class="block w-64 text-sm truncate">
+                          commit: b5aa5335438634ca689cd052
+                        </span>
+                      </div>
+                      <div class="flex flex-row text-gray-500">
+                        <i class="mr-2 text-lg far fa-pause-circle fa-fw"></i>
+                        <span class="block text-sm font-semibold ">
+                        #9 pending
+                        </span>
+                      </div>
+                    </div>
+                    <div class="space-y-3 sm:hidden lg:block">
+                      <span class="block text-sm tracking-wide">
+                        <i class="mr-2 far fa-clock fa-fw"></i>
+                        Ran for <span> 2m 30sec</span>
+                      </span>
+                      <span class="block text-sm">
+                        <i class="mr-2 fas fa-calendar-week fa-fw"></i>
+                        1 day ago
+                      </span>
+                    </div>
+                    <div class="space-y-3 sm:mr-1 lg:mr-4">
+                      <span class="block text-sm tracking-wide text-yellow-500">
+                        <button class="transition delay-75 hover:text-yellow-600">
+                          <i class="text-lg fas fa-sync-alt"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
               </div>
+            </li>
+          </ul>
+        </div>
+        <div class="flex flex-col mt-12 md:px-6 md:py-4 h-3/6 md:flex-row">
+          <div class="w-full h-full overflow-y-auto bg-white shadow-md md:w-3/12">
+            <div class="flex items-center w-full p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-200">
+              <svg class="w-5 h-5 mr-3 animate-spin" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span class="whitespace-normal">Pippo Pippo Pippo Pippo Pippo pending</span>
             </div>
           </div>
-
+          <div class="hidden w-full h-full overflow-y-auto bg-gray-800 shadow-md md:block md:w-9/12">
+            <p class="p-4 text-white opacity-70">Lorem Impsuummmmdmddmdmdmd Lorem ImpsuummmmdmddmdmdmLorem ImpsuummmmdmddmdmdmLorem Impsuummmmdmddmdmdm Lorem Impsuummmmdmddmdmdm Lorem Impsuummmmdmddmdmdmd Lorem Impsuummmmdmddmdmdmd <p>
           </div>
-        </li>
+        </div>
+      </div>
+    </div>
 
+<% end %>
 
-        <% end %>
-
-
-
-      </ul>
-  </div>
-</div>
 </section>

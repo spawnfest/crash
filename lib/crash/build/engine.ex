@@ -83,7 +83,7 @@ defmodule Crash.Build.Engine do
 
   @spec status(integer) :: {:ok, Build.t()} | {:error, any}
   def status(build_id) do
-    case Process.whereis(:"#{build_id}") do
+    case :global.whereis_name(:"#{build_id}") do
       nil ->
         {:error, :build_not_found}
 
@@ -111,9 +111,13 @@ defmodule Crash.Build.Engine do
     {:ok, _job} =
       case length(Node.list()) do
         0 ->
-          Logger.info("Start build #{build.id} on actual node #{inspect(Node.self())}")
+          pid = :global.whereis_name({Crash.Build.Engine.Jobs.Supervisor, Node.self()})
 
-          Supervisor.start_job(job_params)
+          Logger.info(
+            "Start build #{build.id} on node #{inspect(Node.self())} with process #{inspect(pid)}"
+          )
+
+          Supervisor.start_remote_job(pid, job_params)
 
         _ ->
           node = [Node.self() | Node.list()] |> Enum.random()
