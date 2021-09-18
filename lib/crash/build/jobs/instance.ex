@@ -105,6 +105,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
       ) do
     Logger.info("Stop #{inspect(__MODULE__)}... #{inspect(state)}")
 
+    # ehm, how do I update a struct?
     send(engine, {:update, self(), build_state})
 
     {:stop, :normal, state}

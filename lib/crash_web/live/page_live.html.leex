@@ -10,7 +10,7 @@
         </div>
         <ul class="relative z-0 border-b border-gray-200 divide-y divide-gray-200"
           <%= for build <- @builds do %>
-              <button phx-click="build-details" phx-value-build="<%= build.id %>">cancel</button>
+              <button phx-click="build-details" phx-value-build="<%= build.id %>">
               <li class="relative py-5 pl-4 pr-6 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8">
               <div class="flex items-center justify-between space-x-4">
                 <div class="min-w-0 space-y-3">
@@ -44,6 +44,7 @@
                 </div>
               </div>
             </li>
+            </button>
         <% end %>
         </ul>
     </div>
@@ -68,12 +69,12 @@
                         <span class="flex items-center justify-center w-4 h-4 bg-gray-200 rounded-full animate-pulse" aria-hidden="true">
                           <span class="w-2 h-2 bg-gray-500 rounded-full"></span>
                         </span>
-                        <span class="block w-40 ml-3 text-sm font-medium truncate">branch/branch/braanch</span>
+                        <span class="block w-40 ml-3 text-sm font-medium truncate"><%= @build.repository.name %></span>
                       </div>
                       <div class="flex flex-row items-center">
                         <i class="text-sm text-gray-500 fas fa-crop-alt fa-fw"></i>
                         <span class="block w-40 ml-3 text-sm truncate">
-                          compare: <span>6113728f27a</span>
+                          compare: <span><%= @build.repository.compare %></span>
                         </span>
                       </div>
                       <div class="flex items-center">
@@ -82,37 +83,31 @@
                             <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                           </svg>
                         </span>
-                        <span class="block w-20 ml-3 text-sm truncate">Pippo Pluto</span>
+                        <span class="block w-20 ml-3 text-sm truncate"><%= @build.repository.commit.author.username %></span>
                       </div>
                     </div>
                     <div class="flex flex-col space-y-3">
                       <div class="flex flex-row">
                         <i class="mr-2 text-lg fas fa-long-arrow-alt-right fa-fw"></i>
                         <h3 class="block w-64 text-sm truncate">
-                          Feat: Add sosssdddddssssssssssssssssssddddddddddddddddddddsssssme shit
+                          <%= @build.repository.commit.message %>
                         </h3>
                       </div>
                       <div class="flex flex-row">
                         <i class="mr-2 text-lg fas fa-arrows-alt-h fa-fw"></i>
                         <span class="block w-64 text-sm truncate">
-                          commit: b5aa5335438634ca689cd052
-                        </span>
-                      </div>
-                      <div class="flex flex-row text-gray-500">
-                        <i class="mr-2 text-lg far fa-pause-circle fa-fw"></i>
-                        <span class="block text-sm font-semibold ">
-                        #9 pending
+                          commit: <%= @build.repository.commit.sha %>
                         </span>
                       </div>
                     </div>
                     <div class="space-y-3 sm:hidden lg:block">
                       <span class="block text-sm tracking-wide">
                         <i class="mr-2 far fa-clock fa-fw"></i>
-                        Ran for <span> 2m 30sec</span>
+                        Ran for <span> Time.diff(Time.utc_now(), @build.started) </span>
                       </span>
                       <span class="block text-sm">
                         <i class="mr-2 fas fa-calendar-week fa-fw"></i>
-                        1 day ago
+                        <%= @build.repository.commit.timestamp %>
                       </span>
                     </div>
                     <div class="space-y-3 sm:mr-1 lg:mr-4">
@@ -130,17 +125,23 @@
           </ul>
         </div>
         <div class="flex flex-col mt-12 md:px-6 md:py-4 h-3/6 md:flex-row">
-          <div class="w-full h-full overflow-y-auto bg-white shadow-md md:w-3/12">
-            <div class="flex items-center w-full p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-200">
-              <svg class="w-5 h-5 mr-3 animate-spin" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              <span class="whitespace-normal">Pippo Pippo Pippo Pippo Pippo pending</span>
-            </div>
-          </div>
+          <ul>
+            <%= for current_step <- @build.completed_steps do %>
+              <li>
+                <div class="w-full h-full overflow-y-auto bg-white shadow-md md">
+                <button phx-click="step-details" phx-value-step="<%= current_step.name %>">
+                  <div class="flex items-center w-full p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-200">
+                    <span class="whitespace-normal">
+                      <%= current_step.name %>
+                    </span>
+                  </div>
+                </button>
+                </div>
+              </li>
+            <% end %>
+          </ul>
           <div class="hidden w-full h-full overflow-y-auto bg-gray-800 shadow-md md:block md:w-9/12">
-            <p class="p-4 text-white opacity-70">Lorem Impsuummmmdmddmdmdmd Lorem ImpsuummmmdmddmdmdmLorem ImpsuummmmdmddmdmdmLorem Impsuummmmdmddmdmdm Lorem Impsuummmmdmddmdmdm Lorem Impsuummmmdmddmdmdmd Lorem Impsuummmmdmddmdmdmd <p>
+            <p class="p-4 text-white opacity-70"> <%= @step.commands %> <p>
           </div>
         </div>
       </div>

@@ -101,7 +101,8 @@ defmodule Crash.Build.Engine do
       pipeline: pipeline,
       state: :ready,
       completed_steps: [],
-      repository: repository
+      repository: repository,
+      started: Time.utc_now()
     })
   end
 

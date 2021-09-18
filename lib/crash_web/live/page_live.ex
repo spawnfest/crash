@@ -29,6 +29,12 @@ defmodule CrashWeb.PageLive do
   def handle_event("build-details", %{"build" => build_id}, socket) do
     build = Engine.info(build_id)
 
-    {:noreply, assign(socket, build: build)}
+    {:noreply, assign(socket, build: build, step: hd(build.completed_steps))}
+  end
+
+  def handle_event("step-details", %{"step" => step_name}, socket) do
+    step = Enum.find(socket.assigns.build.completed_steps, fn s -> s.name == step_name end)
+
+    {:noreply, assign(socket, step: step)}
   end
 end
