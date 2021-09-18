@@ -4,19 +4,19 @@ defmodule Crash.MixProject do
   def project do
     [
       app: :crash,
-      version: "0.1.0",
+      version: get_version_number(),
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      dialyzer: dialyzer(),
+      preferred_cli_env: preferred_cli_env(),
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
-  # Configuration for the OTP application.
-  #
-  # Type `mix help compile.app` for more information.
   def application do
     [
       mod: {Crash.Application, []},
@@ -24,13 +24,9 @@ defmodule Crash.MixProject do
     ]
   end
 
-  # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
-  # Specifies your project dependencies.
-  #
-  # Type `mix help deps` for examples and options.
   defp deps do
     [
       {:phoenix, "~> 1.5.12"},
@@ -60,16 +56,49 @@ defmodule Crash.MixProject do
     ]
   end
 
-  # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to install project dependencies and perform other setup tasks, run:
-  #
-  #     $ mix setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
+      c: "compile",
+      cc: "compile --all-warnings --ignore-module-conflict --debug-info",
+      check: [
+        "credo --strict",
+        "dialyzer --format dialyzer"
+      ],
+      cover: "coveralls",
+      "cover.detail": "coveralls.detail",
+      s: "phx.server",
       setup: ["deps.get", "cmd npm install --prefix assets"],
-      "format.all": "format mix.exs 'lib/**/*.{ex,exs}' 'test/**/*.{ex,exs}' 'config/*.{ex,exs}'"
+      "format.all": "format mix.exs 'lib/**/*.{ex,exs}' 'test/**/*.{ex,exs}' 'config/*.{ex,exs}'",
+      test: "test --trace"
     ]
+  end
+
+  defp dialyzer do
+    [
+      ignore_warnings: ".dialyzer_ignore.exs",
+      plt_add_apps: [:ex_unit, :jason, :mix],
+      plt_add_deps: :app_tree,
+      plt_file: {:no_warn, "priv/plts/crash_1_12_3_otp_24.plt"}
+    ]
+  end
+
+  defp preferred_cli_env do
+    [
+      coveralls: :test,
+      cover: :test,
+      "cover.detail": :test,
+      "cover.html": :test,
+      muzak: :test
+    ]
+  end
+
+  def get_version_number do
+    commit = :os.cmd('git rev-parse --short HEAD') |> to_string |> String.trim_trailing("\n")
+    v = "0.1.0+#{commit}"
+
+    case Mix.env() do
+      :dev -> v <> "dev"
+      _ -> v
+    end
   end
 end
