@@ -9,6 +9,7 @@ defmodule Crash.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      consolidate_protocols: Mix.env() != :test,
       aliases: aliases(),
       deps: deps(),
       dialyzer: dialyzer(),
@@ -19,7 +20,7 @@ defmodule Crash.MixProject do
 
   def application do
     [
-      mod: {Crash.Application, []},
+      mod: {Crash.Application, %{env: Mix.env()}},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
