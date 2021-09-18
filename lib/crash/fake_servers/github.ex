@@ -24,9 +24,10 @@ defmodule Crash.FakeServers.Github do
             - npm install
             - npm test
 
-        - name: another-test
+        - name: specific test
           image: node:15.4.0-alpine
           commands:
+            - npm ls
             - npm install
             - npm test
       """

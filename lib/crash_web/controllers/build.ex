@@ -15,8 +15,8 @@ defmodule CrashWeb.Controllers.Build do
   def execute(conn, params) do
     with {:ok, commit} <- Parser.push_event(params),
          {:ok, raw_pipeline} <- Client.fetch_pipeline(commit),
-         {:ok, raw_pipeline} <- YamlElixir.read_from_string(raw_pipeline),
-         {:ok, pipeline} <- PipelineBuilder.build(Data.atomize_keys(raw_pipeline)),
+         {:ok, parsed_pipeline} <- YamlElixir.read_from_string(raw_pipeline),
+         {:ok, pipeline} <- PipelineBuilder.build(Data.atomize_keys(parsed_pipeline)),
          {:ok, repository} <- RepositoryBuilder.build(commit),
          {:ok, build} <- Engine.schedule(pipeline, repository) do
       send_resp(conn, 200, Jason.encode!(build))
@@ -27,8 +27,8 @@ defmodule CrashWeb.Controllers.Build do
     end
   end
 
-  def build(conn, %{"id" => id}) do
-    case Engine.status(id) do
+  def build(conn, %{"id" => build_id}) do
+    case Engine.status(build_id) do
       {:ok, build} ->
         send_resp(conn, 200, Jason.encode!(build))
 

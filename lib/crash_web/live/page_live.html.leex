@@ -51,9 +51,8 @@
   </div>
 
   <%= if !is_nil(@build) do %>
-
     <div class="flex-1 h-screen bg-yellow-100">
-      <div class="px-6 py-4">
+      <div class="px-6 py-2">
       <div class="flex items-center mt-5">
         <h1 class="flex-1 text-lg font-medium">Current Commit: <span class="text-yellow-700"><%= @build.repository.commit.sha %></span> </h1>
       </div>
@@ -66,8 +65,8 @@
                   <div class="flex flex-col space-y-5 md:space-y-1 md:items-center md:justify-between md:flex-row">
                     <div class="flex flex-col space-y-3">
                       <div class="flex flex-row items-center">
-                        <span class="flex items-center justify-center w-4 h-4 bg-gray-200 rounded-full animate-pulse" aria-hidden="true">
-                          <span class="w-2 h-2 bg-gray-500 rounded-full"></span>
+                        <span class="flex items-center justify-center w-4 h-4 bg-green-300 rounded-full animate-pulse" aria-hidden="true">
+                          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
                         </span>
                         <span class="block w-60 ml-4 text-sm font-medium">
                           repository: <%= @build.repository.name %>
@@ -154,7 +153,6 @@
                 <%= for command <- @step.commands do %>
                   <p class="text-white"> <%= command %> </p>
                 <% end %>
-
                 <%= for log <- @step.logs do %>
                   <p class="text-white"> <%= log %> </p>
                 <% end %>
@@ -164,7 +162,5 @@
         </div>
       </div>
     </div>
-
   <% end %>
-
 </section>

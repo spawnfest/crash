@@ -48,5 +48,6 @@ TODO add console screenshot with multiple nodes
 ## Improvements / Missing 
 
 - add more integration / unit tests
+- improve error handling inside gensever
 - TODO
 
