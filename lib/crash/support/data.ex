@@ -1,6 +1,6 @@
 defmodule Crash.Support.Data do
   @moduledoc """
-  Data manipulation utils module.
+  Data manipulation utils module
   """
 
   @doc """

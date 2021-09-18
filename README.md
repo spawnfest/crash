@@ -36,3 +36,17 @@ start                          Start application
 test                           Execute crash suite test
 up                             Start all services
 ```
+
+
+## How to USE
+
+TODO add description Here
+TODO add UI image with some builds
+TODO add console screenshot with multiple nodes
+
+
+## Improvements / Missing 
+
+- add more integration / unit tests
+- TODO
+

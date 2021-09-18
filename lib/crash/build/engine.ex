@@ -81,9 +81,9 @@ defmodule Crash.Build.Engine do
     {:ok, build}
   end
 
-  @spec status(integer) :: {:ok, Build.t()} | {:error, any}
+  @spec status(String.t()) :: {:ok, Build.t()} | {:error, any}
   def status(build_id) do
-    case :global.whereis_name(:"#{build_id}") do
+    case :global.whereis_name(String.to_atom(build_id)) do
       pid when is_pid(pid) ->
         build = GenServer.call(pid, :status)
         {:ok, build}
@@ -102,7 +102,8 @@ defmodule Crash.Build.Engine do
       state: :ready,
       completed_steps: [],
       repository: repository,
-      started: Time.utc_now()
+      started: Time.utc_now(),
+      ended: nil
     })
   end
 

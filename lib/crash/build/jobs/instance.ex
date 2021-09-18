@@ -10,6 +10,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
   alias Crash.Docker.Containers
   alias Crash.Docker.Images
   alias Crash.Docker.Volumes
+  alias Crash.Support.Ansi
 
   defmodule State do
     @moduledoc false
@@ -19,8 +20,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
       :process_uuid,
       :build,
       :engine,
-      :volume,
-      :logs
+      :volume
     ]
   end
 
@@ -31,8 +31,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
       process_uuid: Keyword.fetch!(opts, :process_uuid),
       build: Keyword.fetch!(opts, :build),
       engine: Keyword.fetch!(opts, :engine),
-      volume: volume,
-      logs: %{}
+      volume: volume
     }
 
     GenServer.start_link(__MODULE__, state, name: {:global, state.process_uuid})
@@ -100,15 +99,17 @@ defmodule Crash.Build.Engine.Jobs.Instance do
   @impl true
   def handle_info(
         :run,
-        %State{build: %Build{pipeline: %Pipeline{steps: []}} = state, engine: engine} =
+        %State{build: %Build{pipeline: %Pipeline{steps: []}} = build, engine: engine} =
           build_state
       ) do
-    Logger.info("Stop #{inspect(__MODULE__)}... #{inspect(state)}")
+    Logger.info("Stop #{inspect(__MODULE__)}... #{inspect(build)}")
 
-    # ehm, how do I update a struct?
-    send(engine, {:update, self(), build_state})
+    new_build = %{build | ended: Time.utc_now()}
+    new_state = %{build_state | build: new_build}
 
-    {:stop, :normal, state}
+    send(engine, {:update, self(), new_state})
+
+    {:stop, :normal, new_state}
   end
 
   @impl true
@@ -120,8 +121,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
               pipeline: %Pipeline{steps: [step | steps]} = pipeline,
               completed_steps: completed_steps
             } = build,
-          volume: %{"Name" => name},
-          logs: logs
+          volume: %{"Name" => name}
         } = state
       ) do
     Logger.info("Start #{inspect(__MODULE__)}...")
@@ -152,9 +152,13 @@ defmodule Crash.Build.Engine.Jobs.Instance do
 
     new_p = struct(pipeline, steps: steps)
 
-    new_b = struct(build, pipeline: new_p, completed_steps: completed_steps ++ [step])
+    new_b =
+      struct(build,
+        pipeline: new_p,
+        completed_steps: completed_steps ++ [%{step | logs: a_logs |> Enum.map(&Ansi.strip/1)}]
+      )
 
-    new_s = struct(state, build: new_b, logs: Map.merge(logs, %{:"step.name" => a_logs}))
+    new_s = struct(state, build: new_b)
 
     schedule_job()
 

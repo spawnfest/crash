@@ -22,14 +22,16 @@ defmodule CrashWeb.PageLive do
   end
 
   @impl true
-  def handle_event("update", _value, socket) do
-    {:noreply, assign(socket, builds: Engine.builds())}
+  def handle_event("update", %{"build" => build_id}, socket) do
+    build = Engine.info(build_id)
+
+    {:noreply, assign(socket, builds: Engine.builds(), build: build)}
   end
 
   def handle_event("build-details", %{"build" => build_id}, socket) do
     build = Engine.info(build_id)
 
-    {:noreply, assign(socket, build: build, step: hd(build.completed_steps))}
+    {:noreply, assign(socket, build: build, step: List.first(build.completed_steps, nil))}
   end
 
   def handle_event("step-details", %{"step" => step_name}, socket) do

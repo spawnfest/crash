@@ -12,7 +12,8 @@ defmodule Crash.Core.Build do
           state: :ready | :running | :finished,
           completed_steps: [Step.t()],
           volumes: String.t(),
-          started: Time.t()
+          started: Time.t(),
+          ended: Time.t()
         }
 
   @derive Jason.Encoder
@@ -23,7 +24,8 @@ defmodule Crash.Core.Build do
     :state,
     :completed_steps,
     :volumes,
-    :started
+    :started,
+    :ended
   ]
 
   use ExConstructor

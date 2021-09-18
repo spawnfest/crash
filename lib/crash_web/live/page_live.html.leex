@@ -39,7 +39,7 @@
                 <div class="flex-col items-end flex-shrink-0 hidden space-y-3 sm:flex">
                   <p class="flex space-x-2 text-sm text-gray-500">
                     <span aria-hidden="true">&middot;</span>
-                    <span>Last deploy 3h ago</span>
+                    <span>Last deploy <%= Time.diff(Time.utc_now(), build.repository.commit.timestamp, :second) %> seconds ago</span>
                   </p>
                 </div>
               </div>
@@ -69,12 +69,14 @@
                         <span class="flex items-center justify-center w-4 h-4 bg-gray-200 rounded-full animate-pulse" aria-hidden="true">
                           <span class="w-2 h-2 bg-gray-500 rounded-full"></span>
                         </span>
-                        <span class="block w-40 ml-3 text-sm font-medium truncate"><%= @build.repository.name %></span>
+                        <span class="block w-60 ml-4 text-sm font-medium">
+                          repository: <%= @build.repository.name %>
+                        </span>
                       </div>
                       <div class="flex flex-row items-center">
                         <i class="text-sm text-gray-500 fas fa-crop-alt fa-fw"></i>
-                        <span class="block w-40 ml-3 text-sm truncate">
-                          compare: <span><%= @build.repository.compare %></span>
+                        <span class="block w-60 ml-3 text-sm truncate">
+                          <a href=<%= @build.repository.compare %>>compare changes</a>
                         </span>
                       </div>
                       <div class="flex items-center">
@@ -83,19 +85,21 @@
                             <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                           </svg>
                         </span>
-                        <span class="block w-20 ml-3 text-sm truncate"><%= @build.repository.commit.author.username %></span>
+                        <span class="block w-40 ml-3 text-sm truncate">
+                          username: <%= @build.repository.commit.author.username %>
+                        </span>
                       </div>
                     </div>
                     <div class="flex flex-col space-y-3">
                       <div class="flex flex-row">
                         <i class="mr-2 text-lg fas fa-long-arrow-alt-right fa-fw"></i>
                         <h3 class="block w-64 text-sm truncate">
-                          <%= @build.repository.commit.message %>
+                          message: <%= @build.repository.commit.message %>
                         </h3>
                       </div>
                       <div class="flex flex-row">
                         <i class="mr-2 text-lg fas fa-arrows-alt-h fa-fw"></i>
-                        <span class="block w-64 text-sm truncate">
+                        <span class="block w-74 text-sm">
                           commit: <%= @build.repository.commit.sha %>
                         </span>
                       </div>
@@ -103,16 +107,20 @@
                     <div class="space-y-3 sm:hidden lg:block">
                       <span class="block text-sm tracking-wide">
                         <i class="mr-2 far fa-clock fa-fw"></i>
-                        Ran for <span> Time.diff(Time.utc_now(), @build.started) </span>
+                        <%= if is_nil(@build.ended) do %>
+                          Ran for: <span> <%= Time.diff(Time.utc_now(), @build.started) %> seconds</span>
+                        <% else %>
+                          Execution time: <span> <%= Time.diff(@build.ended, @build.started) %> seconds</span>
+                        <% end %>
                       </span>
                       <span class="block text-sm">
                         <i class="mr-2 fas fa-calendar-week fa-fw"></i>
-                        <%= @build.repository.commit.timestamp %>
+                        commited at: <%= @build.repository.commit.timestamp %>
                       </span>
                     </div>
                     <div class="space-y-3 sm:mr-1 lg:mr-4">
                       <span class="block text-sm tracking-wide text-yellow-500">
-                        <button class="transition delay-75 hover:text-yellow-600">
+                        <button class="transition delay-75 hover:text-yellow-600" phx-click="update" phx-value-build="<%= @build.id %>">
                           <i class="text-lg fas fa-sync-alt"></i>
                         </button>
                       </span>
@@ -142,8 +150,14 @@
           </ul>
           <div class="hidden w-full h-full overflow-y-auto bg-gray-800 shadow-md md:block md:w-9/12">
             <p class="p-2 text-white opacity-70">
-              <%= for command <- @step.commands do %>
-                <p class="text-white"> <%= command %> </p>
+              <%= if !is_nil(@step) do %>
+                <%= for command <- @step.commands do %>
+                  <p class="text-white"> <%= command %> </p>
+                <% end %>
+
+                <%= for log <- @step.logs do %>
+                  <p class="text-white"> <%= log %> </p>
+                <% end %>
               <% end %>
             </p>
           </div>

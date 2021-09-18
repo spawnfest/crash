@@ -4,14 +4,16 @@ defmodule Crash.Core.Step do
   @type t :: %__MODULE__{
           name: String.t(),
           commands: [String.t()],
-          image: String.t()
+          image: String.t(),
+          logs: [String.t()]
         }
 
   @derive Jason.Encoder
   defstruct [
     :name,
     :commands,
-    :image
+    :image,
+    :logs
   ]
 
   use ExConstructor
