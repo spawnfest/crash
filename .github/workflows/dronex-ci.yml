@@ -59,6 +59,8 @@ jobs:
         mix format --check-formatted
 
     - name: Compile project
+      env:
+        SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
       run: |
         MIX_ENV=test mix compile --warnings-as-errors
         MIX_ENV=dev mix compile --warnings-as-errors
