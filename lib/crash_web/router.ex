@@ -1,10 +1,13 @@
 defmodule CrashWeb.Router do
+  @moduledoc false
+
   use CrashWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
+    plug :put_root_layout, {CrashWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -16,7 +19,20 @@ defmodule CrashWeb.Router do
   scope "/", CrashWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", PageLive, :index
+  end
+
+  scope "/", CrashWeb.Controllers do
+    pipe_through :api
+
+    # Build
+    post "/webhook/github", Build, :execute
+
+    # System
+    get "/build/:id", Build, :build
+
+    # System
+    get "/ping", System, :ping
   end
 
   # Other scopes may use custom stacks.

@@ -1,6 +1,4 @@
 defmodule Crash.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
 
   use Application
@@ -17,14 +15,23 @@ defmodule Crash.Application do
   defp workers(:test), do: workers(:*)
 
   defp workers(:dev),
-    do: workers(:*)
+    do: [
+      {Plug.Cowboy, scheme: :http, plug: Crash.FakeServers.Github, options: [port: 4001]}
+      | workers(:*)
+    ]
 
   defp workers(_),
     do: [
       :poolboy.child_spec(:docker_worker, poolboy_config()),
 
+      # Start the Telemetry supervisor
+      CrashWeb.Telemetry,
+
       # Start the PubSub system
       {Phoenix.PubSub, name: Crash.PubSub},
+
+      # Start the Endpoint (http/https)
+      CrashWeb.Endpoint,
 
       # Start specialized Supervisor for Task
       {Task.Supervisor, name: Crash.TaskSupervisor}
