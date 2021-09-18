@@ -17,3 +17,10 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+
+## Development links
+
+  * [Conventional Commits][1]
+
+  [1]: https://www.conventionalcommits.org/en/v1.0.0/
