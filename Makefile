@@ -9,7 +9,7 @@ start: up install-deps compile migrate documentation				## Start application
 up:																	## Start all services
 	docker-compose up -d --remove-orphans
 
-build:																## Build all services
+build:																## Build all services containers
 	docker-compose build
 
 shell: container-crash												## Enter into crash service
@@ -24,7 +24,7 @@ install-deps: container-crash										## Install crash dependencies
 compile: container-crash											## Compile crash application
 	docker-compose exec crash mix cs
 
-halt:																## Shoutdown all services
+halt:																## Shoutdown all services containers
 	docker-compose down
 
 test: container-crash												## Execute crash suite test
@@ -46,7 +46,7 @@ clean:																## Shoutdown services
 	docker-compose down -v
 
 help:
-	@perl -e '$(HELP_FUNC)' $(MAKEFILE_LIST)
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 delete:
 	@docker images -a | grep "crash" | awk '{print $3}' | xargs docker rmi -f | docker ps -a | grep "crash" | awk '{print $1}' | xargs docker rm -v
