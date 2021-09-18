@@ -3,8 +3,8 @@ defmodule Crash.Build.Engine.Jobs.Supervisor do
 
   use DynamicSupervisor
 
-  defp global_name(name) do
-    {:global, {__MODULE__, name}}
+  defp global_name(node_name) do
+    {:global, {__MODULE__, node_name}}
   end
 
   def start_link(init_arg) do

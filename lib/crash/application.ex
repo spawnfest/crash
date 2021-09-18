@@ -3,8 +3,7 @@ defmodule Crash.Application do
 
   use Application
 
-  #  @topologies Application.compile_env(:libcluster, :topologies)
-  @topologies [background_job: [strategy: Cluster.Strategy.Gossip]]
+  @topologies Application.compile_env(:libcluster, :topologies)
 
   def start(_type, %{env: env}) do
     children = workers(env) ++ supervisors(env)
@@ -58,7 +57,7 @@ defmodule Crash.Application do
     [
       name: {:local, :docker_worker},
       worker_module: Crash.Docker.Worker,
-      size: 10,
+      size: 5,
       max_overflow: 1
     ]
   end

@@ -45,27 +45,9 @@ defmodule Crash.Build.Engine do
   @doc false
   @impl GenServer
   def handle_call({:schedule, pipeline, repository}, _from, %{builds: builds}) do
-    build_id = UUID.uuid4()
+    build = generate_build(pipeline, repository)
 
-    build =
-      Build.new(%{
-        id: build_id,
-        pipeline: pipeline,
-        state: :ready,
-        completed_steps: [],
-        repository: repository
-      })
-
-    node = [Node.self() | Node.list()] |> Enum.random()
-
-    pid = :global.whereis_name({Crash.Build.Engine.Jobs.Supervisor, node})
-
-    {:ok, _job} =
-      Supervisor.start_remote_job(pid,
-        build: build,
-        process_uuid: :"#{build_id}",
-        engine: self()
-      )
+    start_build(build)
 
     {:reply, build, %{builds: [build | builds]}}
   end
@@ -109,5 +91,39 @@ defmodule Crash.Build.Engine do
         build = GenServer.call(pid, :status)
         {:ok, build}
     end
+  end
+
+  defp generate_build(pipeline, repository) do
+    build_id = UUID.uuid4()
+
+    Build.new(%{
+      id: build_id,
+      pipeline: pipeline,
+      state: :ready,
+      completed_steps: [],
+      repository: repository
+    })
+  end
+
+  defp start_build(build) do
+    job_params = [build: build, process_uuid: :"#{build.id}", engine: self()]
+
+    {:ok, _job} =
+      case length(Node.list()) do
+        0 ->
+          Logger.info("Start build #{build.id} on actual node #{inspect(Node.self())}")
+
+          Supervisor.start_job(job_params)
+
+        _ ->
+          node = [Node.self() | Node.list()] |> Enum.random()
+          pid = :global.whereis_name({Crash.Build.Engine.Jobs.Supervisor, node})
+
+          Logger.info(
+            "Start build #{build.id} on node #{inspect(node)} with process #{inspect(pid)}"
+          )
+
+          Supervisor.start_remote_job(pid, job_params)
+      end
   end
 end
