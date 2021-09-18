@@ -70,7 +70,8 @@ defmodule Crash.MixProject do
   defp aliases do
     [
       c: "compile",
-      cc: "compile --all-warnings --ignore-module-conflict --debug-info",
+      "format.all": "format mix.exs 'lib/**/*.{ex,exs}' 'test/**/*.{ex,exs}' 'config/*.{ex,exs}'",
+      cs: "compile --all-warnings --ignore-module-conflict --debug-info",
       check: [
         "credo --strict",
         "dialyzer --format dialyzer"
@@ -79,7 +80,6 @@ defmodule Crash.MixProject do
       "cover.detail": "coveralls.detail",
       s: "phx.server",
       setup: ["deps.get", "cmd npm install --prefix assets"],
-      "format.all": "format mix.exs 'lib/**/*.{ex,exs}' 'test/**/*.{ex,exs}' 'config/*.{ex,exs}'",
       test: "test --trace"
     ]
   end
@@ -89,7 +89,7 @@ defmodule Crash.MixProject do
       ignore_warnings: ".dialyzer_ignore.exs",
       plt_add_apps: [:ex_unit, :jason, :mix],
       plt_add_deps: :app_tree,
-      plt_file: {:no_warn, "priv/plts/crash_1_12_3_otp_24.plt"}
+      plt_file: {:no_warn, "priv/plts/crash_1_12_2_otp_24.plt"}
     ]
   end
 
