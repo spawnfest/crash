@@ -29,7 +29,7 @@ defmodule Crash.Github.Client do
 
   @spec fetch_pipeline(Commit.t()) :: result
   def fetch_pipeline(commit_info) do
-    "/repos/#{commit_info.repository.full_name}/contents/.Crash.yml"
+    "/repos/#{commit_info.repository.full_name}/contents/.crash.yml"
     |> get()
     |> parse_response()
   end

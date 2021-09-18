@@ -14,7 +14,7 @@ services:
     env_file:
       - .env.dev
     ports:
-      - 4000:4000
+      - 3000:3000
       - 4369:4369
     volumes:
       - .:/app
@@ -34,7 +34,7 @@ services:
     env_file:
       - .env.dev
     ports:
-      - 4010:4000
+      - 3010:3000
       - 4379:4369
     volumes:
       - .:/app
@@ -54,7 +54,7 @@ services:
     env_file:
       - .env.dev
     ports:
-      - 4020:4000
+      - 3020:3000
       - 4389:4369
     volumes:
       - .:/app

@@ -6,7 +6,7 @@ defmodule Crash.FakeServers.Github do
   plug :match
   plug :dispatch
 
-  get "/repos/:owner/:repo/contents/.dronex.yml" do
+  get "/repos/:owner/:repo/contents/.crash.yml" do
     conn
     |> put_resp_content_type("application/vnd.github.v3.raw")
     |> send_resp(
