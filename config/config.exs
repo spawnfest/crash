@@ -15,14 +15,40 @@ config :crash, CrashWeb.Endpoint,
   pubsub_server: Crash.PubSub,
   live_view: [signing_salt: "bkGOCi+o"]
 
-# Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
+config :tesla, adapter: Tesla.Adapter.Hackney
+
+config :tesla, Tesla.Middleware.Logger, debug: false
+
+config :crash, :docker,
+  protocol: "http+unix",
+  host: "/var/run/docker.sock",
+  version: "v1.18"
+
+config :crash, :github, base_url: "http://localhost:4001"
+
+config :libcluster,
+  topologies: [
+    example: [
+      # The selected clustering strategy. Required.
+      strategy: Cluster.Strategy.Epmd,
+      # Configuration for the provided strategy. Optional.
+      config: [hosts: []],
+      # The function to use for connecting nodes. The node
+      # name will be appended to the argument list. Optional
+      connect: {:net_kernel, :connect_node, []},
+      # The function to use for disconnecting nodes. The node
+      # name will be appended to the argument list. Optional
+      disconnect: {:erlang, :disconnect_node, []},
+      # The function to use for listing nodes.
+      # This function must return a list of node names. Optional
+      list_nodes: {:erlang, :nodes, [:connected]}
+    ]
+  ]
+
 import_config "#{Mix.env()}.exs"
