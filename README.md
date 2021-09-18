@@ -1,6 +1,6 @@
 # Crash
 
-![Crash from Crash Bandicoot™](https://github.com/spawnfest/crash/blob/master/media/crash-bandicoot.jpg)
+![Crash from Crash Bandicoot™](https://github.com/spawnfest/crash/blob/master/media/crash-bandicoot.png)
 
 Crash is a Continuous Integration System.
 
