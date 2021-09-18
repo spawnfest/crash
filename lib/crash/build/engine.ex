@@ -56,8 +56,12 @@ defmodule Crash.Build.Engine do
         repository: repository
       })
 
+    node = [Node.self() | Node.list()] |> Enum.random()
+
+    pid = :global.whereis_name({Crash.Build.Engine.Jobs.Supervisor, node})
+
     {:ok, _job} =
-      Supervisor.start_job(
+      Supervisor.start_remote_job(pid,
         build: build,
         process_uuid: :"#{build_id}",
         engine: self()

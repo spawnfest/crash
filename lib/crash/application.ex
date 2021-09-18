@@ -3,7 +3,8 @@ defmodule Crash.Application do
 
   use Application
 
-  @topologies Application.compile_env(:libcluster, :topologies)
+  #  @topologies Application.compile_env(:libcluster, :topologies)
+  @topologies [background_job: [strategy: Cluster.Strategy.Gossip]]
 
   def start(_type, %{env: env}) do
     children = workers(env) ++ supervisors(env)

@@ -2,7 +2,7 @@
 
 ![Crash from Crash Bandicoot™](https://github.com/spawnfest/crash/blob/master/media/crash-bandicoot.png)
 
-Crash is a Continuous Integration System.
+Crash is a simple docker-on-docker Continuous Integration System writter in Elixir - SpawnFest 2021
 
 [![CI](https://github.com/spawnfest/crash/actions/workflows/crash-ci.yml/badge.svg)](https://github.com/spawnfest/crash/actions/workflows/crash-ci.yml)
 
