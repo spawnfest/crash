@@ -18,92 +18,21 @@ Crash is a simple docker-on-docker Continuous Integration System writter in Elix
 
 ## Getting started
 
-#### Get all command list
+#### make commands
 
 ```bash
-make help
-```
-
-#### Build all services containers
-
-```bash
-make build
-```
-
-#### Execute static code analysis
-
-```bash
-make check
-```
-
-#### Shoutdown services
-
-```bash
-make clean
-```
-
-#### Compile crash application
-
-```bash
-make compile
-```
-
-#### Execute code coverage
-
-```bash
-make coverage
-```
-
-#### Execute code format verification
-
-```bash
-make format-check
-```
-
-#### Execute code formatting
-
-```bash
-make format
-```
-
-#### Shoutdown all services containers
-
-```bash
-make halt
-```
-
-#### Install crash dependencies
-
-```bash
-make install-deps
-```
-
-#### Enter into crash service
-
-```bash
-make shell
-```
-
-#### Enter into crash service with beam local-node name
-
-```bash
-make shell-node
-```
-
-#### Start application
-
-```bash
-make start
-```
-
-#### Execute crash suite test
-
-```bash
-make test
-```
-
-#### Start all services
-
-```bash
-make up
+build                          Build all services containers
+check                          Execute static code analysis
+clean                          Shoutdown services
+compile                        Compile crash application
+coverage                       Execute code coverage
+format-check                   Execute code format verification
+format                         Execute code formatting
+halt                           Shoutdown all services containers
+install-deps                   Install crash dependencies
+shell                          Enter into crash service
+shell-node                     Enter into crash service with beam local-node name
+start                          Start application
+test                           Execute crash suite test
+up                             Start all services
 ```
