@@ -30,7 +30,7 @@ defmodule CrashWeb do
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/Crash_web/templates",
+        root: "lib/crash_web/templates",
         namespace: CrashWeb
 
       # Import convenience functions from controllers
