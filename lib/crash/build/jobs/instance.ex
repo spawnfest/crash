@@ -98,7 +98,11 @@ defmodule Crash.Build.Engine.Jobs.Instance do
   end
 
   @impl true
-  def handle_info(:run, %State{build: %Build{pipeline: %Pipeline{steps: []}} = state, engine: engine} = build_state) do
+  def handle_info(
+        :run,
+        %State{build: %Build{pipeline: %Pipeline{steps: []}} = state, engine: engine} =
+          build_state
+      ) do
     Logger.info("Stop #{inspect(__MODULE__)}... #{inspect(state)}")
 
     send(engine, {:update, self(), build_state})

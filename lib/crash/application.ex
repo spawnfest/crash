@@ -45,7 +45,7 @@ defmodule Crash.Application do
     CrashWeb.Endpoint.config_change(changed, removed)
     :ok
   end
-  
+
   defp poolboy_config do
     [
       name: {:local, :docker_worker},
