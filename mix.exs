@@ -29,14 +29,24 @@ defmodule Crash.MixProject do
 
   defp deps do
     [
-      {:phoenix, "~> 1.5.12"},
+      {:exconstructor, "~> 1.2"},
+      {:gettext, "~> 0.11"},
+      {:hackney, "~> 1.17"},
+      {:jason, "~> 1.0"},
+      {:libcluster, "~> 3.2"},
+      {:mix_unused, "~> 0.1.0"},
+      {:noether, "~> 0.2.2"},
+      {:phoenix, "~> 1.5.9"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_dashboard, "~> 0.4"},
+      {:phoenix_live_view, "~> 0.15.1"},
+      {:plug_cowboy, "~> 2.0"},
+      {:poolboy, "~> 1.5"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:tesla, "~> 1.4"},
+      {:yaml_elixir, "~> 2.8"},
+      {:uuid, "~> 1.1"}
     ] ++ deps_dev()
   end
 
