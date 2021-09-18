@@ -4,7 +4,6 @@ defmodule CrashWeb.PageLive do
   use CrashWeb, :live_view
 
   alias Crash.Build.Engine
-  alias Crash.Core.Build
 
   @impl true
   def mount(_params, _session, socket) do
