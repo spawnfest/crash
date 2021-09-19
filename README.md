@@ -101,7 +101,8 @@ make commit
 - with four or more builds the UI is broken
 - fix mutation testing in CI
 - introduce Chaos Monkey testing
-- TODO
+- add persistent builds through data storage (mnesia, postgres, etc.)
+
 
 ## Why?
 
