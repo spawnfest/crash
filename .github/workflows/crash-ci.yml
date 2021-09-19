@@ -74,9 +74,9 @@ jobs:
       run: |
         mix coveralls
 
-    # - name: Run mutation tests
-    #   run: |
-    #     mix muzak
+    - name: Run mutation tests
+      run: |
+        mix muzak
 
     - name: Retrieve Dialyzer PLT cache
       uses: actions/cache@v2

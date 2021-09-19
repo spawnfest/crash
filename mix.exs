@@ -48,7 +48,8 @@ defmodule Crash.MixProject do
       {:tesla, "~> 1.4"},
       {:timex, "~> 3.7"},
       {:yaml_elixir, "~> 2.8"},
-      {:uuid, "~> 1.1"}
+      {:uuid, "~> 1.1"},
+      {:deep_merge, "~> 1.0"}
     ] ++ deps_dev()
   end
 
@@ -83,7 +84,7 @@ defmodule Crash.MixProject do
       "cover.detail": "coveralls.detail",
       s: "phx.server",
       setup: ["deps.get", "cmd npm install --prefix assets"],
-      test: "test --trace"
+      t: "test --trace"
     ]
   end
 
