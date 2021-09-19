@@ -9,6 +9,7 @@ Crash is a simple (distributed) docker-on-docker Continuous Integration system w
 ## Requirements
   
   - docker **20+**
+  - docker-compose **1.29+**
   - GNU make **4+**
   
 ## Development links
@@ -101,6 +102,6 @@ make commit
 - fix mutation testing in CI
 - TODO
 
-## Why this project?
+## Why?
 
 TODO add motivations

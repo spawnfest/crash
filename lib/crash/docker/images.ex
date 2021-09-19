@@ -14,7 +14,6 @@ defmodule Crash.Docker.Images do
 
   @spec pull(String.t()) :: result
   @spec pull(String.t(), String.t()) :: result
-
   def pull(image) do
     [name, tag] = String.split(image, ":")
 

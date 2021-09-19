@@ -34,7 +34,4 @@ defmodule Crash.Docker.Containers do
   def logs(id) do
     Client.get("#{@base_uri}/#{id}/logs?stdout=true&stderr=true")
   end
-
-  # https://docs.docker.com/engine/api/v1.41/#operation/ContainerLogs
-  # valueate since
 end

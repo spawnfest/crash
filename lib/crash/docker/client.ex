@@ -14,8 +14,7 @@ defmodule Crash.Docker.Client do
     host = Environment.get(:docker, :host) |> String.replace("/", "%2F")
     version = Environment.get(:docker, :version)
 
-    "#{protocol}://#{host}/#{version}"
-    |> String.trim_trailing("/")
+    String.trim_trailing("#{protocol}://#{host}/#{version}", "/")
   end
 
   defp new(base_url) do
@@ -23,7 +22,6 @@ defmodule Crash.Docker.Client do
       {Tesla.Middleware.BaseUrl, base_url},
       Tesla.Middleware.JSON,
       Tesla.Middleware.Logger,
-      #      {Tesla.Middleware.Compression, "gzip"},
       {Tesla.Middleware.Headers, [{"content-type", "application/json"}]}
     ]
 
@@ -37,7 +35,6 @@ defmodule Crash.Docker.Client do
 
   @spec post(url) :: result
   @spec post(url, body) :: result
-
   def post(resource, body \\ nil) do
     base_url() |> new() |> Tesla.post(resource, body)
   end

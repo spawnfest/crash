@@ -8,28 +8,30 @@ defmodule Crash.Github.Parser do
   alias Crash.Github.User
 
   @spec push_event(map) :: {:ok, Commit.t()} | {:error, any}
-  def push_event(%{
-        "ref" => ref,
-        "compare" => compare,
-        "head_commit" => %{
-          "id" => id,
-          "message" => message,
-          "author" => %{
-            "username" => author_username,
-            "email" => author_email
+  def push_event(
+        %{
+          "ref" => ref,
+          "compare" => compare,
+          "head_commit" => %{
+            "id" => id,
+            "message" => message,
+            "author" => %{
+              "username" => author_username,
+              "email" => author_email
+            },
+            "timestamp" => timestamp
           },
-          "timestamp" => timestamp
-        },
-        "repository" => %{
-          "name" => repository_name,
-          "full_name" => repository_full_name,
-          "git_url" => git_url,
-          "owner" => %{
-            "name" => owner_username,
-            "email" => owner_email
+          "repository" => %{
+            "name" => repository_name,
+            "full_name" => repository_full_name,
+            "git_url" => git_url,
+            "owner" => %{
+              "name" => owner_username,
+              "email" => owner_email
+            }
           }
-        }
-      }) do
+        } = event
+      ) do
     owner = User.new(%{username: owner_username, email: owner_email})
 
     repository =
@@ -56,10 +58,15 @@ defmodule Crash.Github.Parser do
       })
 
     {:ok, commit}
+  rescue
+    error ->
+      Logger.error(fn -> "Invalid event #{inspect(event)} with error #{inspect(error)}" end)
+
+      {:error, :invalid_event}
   end
 
   def push_event(event) do
-    Logger.warning("invalid event #{inspect(event)}")
+    Logger.error(fn -> "Invalid event #{inspect(event)}" end)
 
     {:error, :invalid_event}
   end

@@ -22,8 +22,6 @@ defmodule Crash.Application do
 
   defp workers(_),
     do: [
-      :poolboy.child_spec(:docker_worker, poolboy_config()),
-
       # Start the Telemetry supervisor
       CrashWeb.Telemetry,
 
@@ -51,14 +49,5 @@ defmodule Crash.Application do
   def config_change(changed, _new, removed) do
     CrashWeb.Endpoint.config_change(changed, removed)
     :ok
-  end
-
-  defp poolboy_config do
-    [
-      name: {:local, :docker_worker},
-      worker_module: Crash.Docker.Worker,
-      size: 5,
-      max_overflow: 1
-    ]
   end
 end

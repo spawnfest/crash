@@ -2,7 +2,7 @@ defmodule Crash.Github.Client do
   @moduledoc false
 
   @type url :: binary
-  @type result :: {:ok, binary} | {:error, :unexpected_response | :error_response}
+  @type result :: Tesla.Env.result()
 
   require Logger
 

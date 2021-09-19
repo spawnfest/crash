@@ -21,8 +21,9 @@ defmodule CrashWeb.Controllers.Build do
          {:ok, build} <- Engine.schedule(pipeline, repository) do
       send_resp(conn, 200, Jason.encode!(build))
     else
-      err ->
-        Logger.error(err)
+      error ->
+        Logger.error(fn -> error end)
+
         send_resp(conn, 500, "oops")
     end
   end
@@ -33,7 +34,8 @@ defmodule CrashWeb.Controllers.Build do
         send_resp(conn, 200, Jason.encode!(build))
 
       {:error, error} ->
-        Logger.error(error)
+        Logger.error(fn -> error end)
+
         send_resp(conn, 500, "oops")
     end
   end
