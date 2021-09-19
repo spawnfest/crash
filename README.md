@@ -2,7 +2,7 @@
 
 ![Crash from Crash Bandicoot™](https://github.com/spawnfest/crash/blob/master/media/crash-bandicoot.png)
 
-Crash is a simple (distributed) docker-on-docker Continuous Integration system writter in Elixir - SpawnFest 2021
+Crash is a simple (distributed) docker-on-docker Continuous Integration system written in Elixir - SpawnFest 2021
 
 [![CI](https://github.com/spawnfest/crash/actions/workflows/crash-ci.yml/badge.svg)](https://github.com/spawnfest/crash/actions/workflows/crash-ci.yml)
 
@@ -77,6 +77,9 @@ make node-one
 make node-two
 ```
 
+![Example multinode](https://github.com/spawnfest/crash/blob/master/media/crash-multi-example.png)
+
+
 #### open http://localhost:3000/
 
 #### simulate commit request
@@ -85,10 +88,9 @@ make node-two
 make commit 
 ```
 
+![Example build](https://github.com/spawnfest/crash/blob/master/media/crash-build-example.png)
 
 
-- TODO add description Here
-- TODO add UI image with some builds
 - TODO add console screenshot with multiple nodes
 
 
