@@ -28,7 +28,7 @@ defmodule Crash.Github.ParserTest do
         assert res == {:error, :invalid_event}
       end)
 
-    assert captured_logs =~ ~r/.*\[warn\] invalid event .+/
+    assert captured_logs =~ ~r/.*\[error] Invalid event .+/
   end
 
   test "push_event complete map" do

@@ -168,23 +168,14 @@ defmodule Crash.Support.Github.FakeCommit do
     "refs/heads/#{head}"
   end
 
-  def generare_repository do
-    StarWars.planet() |> normalize()
-  end
+  def generare_repository, do: StarWars.planet() |> normalize()
 
-  def genenate_message do
-    StarWars.quote()
-  end
+  def genenate_message, do: StarWars.quote()
 
-  def generate_head_commit_id do
-    UUID.uuid4()
-  end
+  def generate_head_commit_id, do: UUID.uuid4()
 
-  def generate_username do
-    StarWars.character() |> normalize()
-  end
+  def generate_username, do: StarWars.character() |> normalize()
 
-  def generate_timestamp do
-    DateTime.now!("Etc/UTC") |> DateTime.add(-60, :second) |> DateTime.to_iso8601()
-  end
+  def generate_timestamp,
+    do: DateTime.now!("Etc/UTC") |> DateTime.add(-60, :second) |> DateTime.to_iso8601()
 end

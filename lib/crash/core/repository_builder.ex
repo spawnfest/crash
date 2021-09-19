@@ -60,7 +60,7 @@ defmodule Crash.Core.RepositoryBuilder do
   end
 
   def build(commit) do
-    Logger.error(fn -> "received invalid_commit: " <> inspect(commit) end)
+    Logger.error(fn -> "Received invalid_commit: #{inspect(commit)}" end)
 
     {:error, :invalid_commit}
   end

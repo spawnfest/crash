@@ -100,6 +100,7 @@ make commit
 - add opentelemetry stuff
 - with four or more builds the UI is broken
 - fix mutation testing in CI
+- introduce Chaos Monkey testing
 - TODO
 
 ## Why?
