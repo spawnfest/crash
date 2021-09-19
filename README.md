@@ -95,7 +95,6 @@ make commit
 
 - add more integration / unit tests
 - improve error handling inside gensever
-- add handle_info to match step errors and block build and return (instance.ex)
 - improve data visualization on UI
 - add opentelemetry stuff
 - TODO
