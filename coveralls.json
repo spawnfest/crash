@@ -1,9 +1,16 @@
 {
   "custom_stop_words": [],
+
   "coverage_options": {
     "treat_no_relevant_lines_as_covered": true,
     "output_dir": "cover/",
-    "minimum_coverage": 25
+    "minimum_coverage": 23
   },
-  "skip_files": []
+
+  "skip_files": [
+    "lib/crash/fake_servers/",
+    "lib/mix/tasks/",
+    "lib/crash/client.ex",
+    "test/support/"
+  ]
 }
