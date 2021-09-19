@@ -14,7 +14,7 @@ defmodule Mix.Tasks.GenerateCommit do
 
     commit = FakeCommit.generate()
 
-    case Client.client() |> Client.send_commit(commit) do
+    case "http://localhost:3000" |> Client.client() |> Client.send_commit(commit) do
       {:ok, _} ->
         IO.puts("Sent commit to Crash, look at the application for progess...")
 
