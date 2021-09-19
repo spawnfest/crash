@@ -91,9 +91,6 @@ make commit
 ![Example build](https://github.com/spawnfest/crash/blob/master/media/crash-build-example.png)
 
 
-- TODO add console screenshot with multiple nodes
-
-
 ## Improvements / Missing 
 
 - add more integration / unit tests
