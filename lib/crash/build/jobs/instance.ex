@@ -115,8 +115,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
   @impl true
   def handle_info(
         :run,
-        %State{build: %Build{pipeline: %Pipeline{steps: []}}, engine: engine} =
-          build_state
+        %State{build: %Build{pipeline: %Pipeline{steps: []}}, engine: engine} = build_state
       ) do
     new_state = stop_build(build_state)
 
