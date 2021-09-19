@@ -29,7 +29,7 @@ defmodule CrashWeb.PageLive do
   end
 
   def handle_event("build-details", %{"build" => build_id}, socket) do
-    build = Engine.info(build_id) |> IO.inspect(label: :aaaaaaaaaaaaaaaaaaaaaaa)
+    build = Engine.info(build_id)
 
     {:noreply, assign(socket, build: build, step: List.first(build.completed_steps, nil))}
   end

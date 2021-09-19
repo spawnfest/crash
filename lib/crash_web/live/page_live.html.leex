@@ -125,13 +125,12 @@
                       </span>
                     </div>
                   </div>
-
                 </div>
               </div>
             </li>
           </ul>
         </div>
-        <div class="flex flex-col mt-12 md:px-6 md:py-4 h-3/6 md:flex-row">
+        <div class="flex flex-col mt-2 md:px-6 h-4/6 md:flex-row">
           <ul>
             <%= for current_step <- @build.completed_steps do %>
               <li>
@@ -156,7 +155,7 @@
               </li>
             <% end %>
           </ul>
-          <div class="hidden w-full h-full overflow-y-auto bg-gray-800 shadow-md md:block md:w-9/12">
+          <div class="hidden w-full h-full overflow-y-auto bg-gray-800 shadow-md md:block md:w-full">
             <p class="p-2 text-white opacity-70">
               <%= if !is_nil(@step) do %>
                 <%= for command <- @step.commands do %>
