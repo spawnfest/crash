@@ -46,7 +46,7 @@ up                             Start all services
 ```
 
 
-## How to USE
+## How to use
 
 #### setup the project
 
@@ -54,7 +54,7 @@ up                             Start all services
 make init
 ```
 
-### single instance
+### run a single instance
 
 ```bash
 make start
@@ -68,8 +68,9 @@ make start
 make commit 
 ```
 
+### run multiple instances
 
-### multiple instances
+execute the following commands in separate sessions
 
 ``` bash
 make master-node
@@ -78,7 +79,6 @@ make node-two
 ```
 
 ![Example multinode](https://github.com/spawnfest/crash/blob/master/media/crash-multi-example.png)
-
 
 #### open http://localhost:3000/
 
@@ -91,11 +91,16 @@ make commit
 ![Example build](https://github.com/spawnfest/crash/blob/master/media/crash-build-example.png)
 
 
-## Improvements / Missing 
+## Improvements / Missing parts / Bugs 
 
 - add more integration / unit tests
 - improve error handling inside gensever
-- add handle_info to match step errors and block build and return (instance.ex)
 - improve data visualization on UI
 - add opentelemetry stuff
+- with four or more builds the UI is broken
+- fix mutation testing in CI
 - TODO
+
+## Why this project?
+
+TODO add motivations
