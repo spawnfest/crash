@@ -24,6 +24,20 @@ defmodule Crash.Build.Engine.Jobs.Instance do
     ]
   end
 
+  @doc """
+  Stop the given process job instance, typically called when it has reached its final state
+  """
+  def stop(instance) do
+    GenServer.call(instance, :stop)
+  end
+
+  @doc """
+  Fetch the process status of this instance
+  """
+  def job_status(instance) do
+    GenServer.call(instance, :status)
+  end
+
   def start_link(opts) do
     {:ok, %Tesla.Env{body: volume}} = Volumes.create()
 
@@ -37,39 +51,17 @@ defmodule Crash.Build.Engine.Jobs.Instance do
     GenServer.start_link(__MODULE__, state, name: {:global, state.process_uuid})
   end
 
-  @doc """
-  Stop the given process job instance.
-
-  Typically called when it has reached its final state.
-  """
-  def stop(instance) do
-    GenServer.call(instance, :stop)
-  end
-
-  @doc """
-  Get the current job instance's identity.
-  """
-  def identity, do: Process.get(:process_uuid)
-
-  @doc """
-  Fetch the process state of this instance
-  """
-  def job_state(instance) do
-    GenServer.call(instance, :job_state)
-  end
-
   @doc false
   @impl GenServer
   def init(%State{} = state) do
     Process.flag(:trap_exit, true)
+
     {:ok, state, {:continue, :define_state}}
   end
 
   @doc false
   @impl GenServer
-  def handle_continue(:define_state, %State{} = state) do
-    %State{process_uuid: process_uuid} = state
-
+  def handle_continue(:define_state, %State{process_uuid: process_uuid} = state) do
     Process.put(:process_uuid, process_uuid)
 
     schedule_job()
@@ -80,13 +72,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
   @doc false
   @impl GenServer
   def handle_call(:status, _from, %State{build: build} = state) do
-    {:reply, build, state}
-  end
-
-  @doc false
-  @impl GenServer
-  def handle_call(:job_state, _from, %State{build: build} = state) do
-    {:reply, build, state}
+    {:reply, {:ok, build}, state}
   end
 
   @doc false
@@ -184,11 +170,13 @@ defmodule Crash.Build.Engine.Jobs.Instance do
 
   defp schedule_job(run_in_millis \\ 0) do
     Process.send_after(self(), :run, run_in_millis)
+
     :ok
   end
 
   defp stop_job(run_in_millis \\ 0) do
     Process.send_after(self(), :stop_job, run_in_millis)
+
     :ok
   end
 

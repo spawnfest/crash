@@ -22,7 +22,9 @@ defmodule CrashWeb.Controllers.Build do
       send_resp(conn, 200, Jason.encode!(build))
     else
       error ->
-        Logger.error(fn -> error end)
+        Logger.error(fn ->
+          "Something wrong happened while parsing commit request: #{inspect(error)}"
+        end)
 
         send_resp(conn, 500, "oops")
     end
