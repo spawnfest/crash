@@ -70,9 +70,9 @@ jobs:
       run: |
         epmd -daemon
 
-    - name: Run tests
+    - name: Run tests + Coverage
       run: |
-        mix test --include distributed
+        mix coveralls
 
     - name: Run mutation tests
       run: |
