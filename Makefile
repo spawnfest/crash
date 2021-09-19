@@ -42,6 +42,9 @@ format-check: container-crash										## Execute code format verification
 check: container-crash												## Execute static code analysis
 	docker-compose exec -T crash mix check
 
+commit: container-crash												## Execute dynamic commit generation
+	docker-compose exec -T crash mix generate_commit
+
 master-node:														## Start master node
 	docker-compose exec crash iex --sname master-node --cookie 98796e49-6e99-4b8f-8ee1-80c204723037 -S mix s
 
