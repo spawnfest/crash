@@ -138,6 +138,15 @@
                 <div class="w-full h-full overflow-y-auto bg-white shadow-md md border-b border-gray-200 cursor-pointer hover:bg-gray-200">
                 <button phx-click="step-details" phx-value-step="<%= current_step.name %>">
                   <div class="flex items-center w-full p-4">
+                    <%= if current_step.result == :success do %>
+                      <span class="flex items-center justify-center w-4 h-4 bg-green-300 rounded-full animate-pulse" aria-hidden="true">
+                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                      </span>
+                    <% else %>
+                      <span class="flex items-center justify-center w-4 h-4 bg-red-300 rounded-full animate-pulse" aria-hidden="true">
+                        <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                      </span>
+                    <% end %>
                     <span class="whitespace-normal">
                       <%= current_step.name %>
                     </span>

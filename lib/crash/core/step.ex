@@ -5,7 +5,8 @@ defmodule Crash.Core.Step do
           name: String.t(),
           commands: [String.t()],
           image: String.t(),
-          logs: [String.t()]
+          logs: [String.t()],
+          result: :success | :warning | :error
         }
 
   @derive Jason.Encoder
@@ -13,7 +14,8 @@ defmodule Crash.Core.Step do
     :name,
     :commands,
     :image,
-    :logs
+    :logs,
+    :result
   ]
 
   use ExConstructor

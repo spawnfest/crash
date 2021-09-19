@@ -49,5 +49,6 @@ TODO add console screenshot with multiple nodes
 
 - add more integration / unit tests
 - improve error handling inside gensever
+- add handle_info to match step errors and block build and return (instance.ex)
 - TODO
 

@@ -104,7 +104,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
       ) do
     Logger.info("Stop #{inspect(__MODULE__)}... #{inspect(build)}")
 
-    new_build = %{build | ended: Time.utc_now()}
+    new_build = %{build | ended: Time.utc_now(), state: :finished}
     new_state = %{build_state | build: new_build}
 
     send(engine, {:update, self(), new_state})
@@ -144,18 +144,19 @@ defmodule Crash.Build.Engine.Jobs.Instance do
 
     _c = Containers.start(id)
 
-    _d = exited?(id)
+    {_, status} = exited?(id)
 
     {:ok, %Tesla.Env{body: body}} = Containers.logs(id)
 
-    a_logs = body |> String.split("\r\n")
+    a_logs = body |> String.split("\r\n") |> Enum.map(&Ansi.strip/1)
 
     new_p = struct(pipeline, steps: steps)
 
     new_b =
       struct(build,
         pipeline: new_p,
-        completed_steps: completed_steps ++ [%{step | logs: a_logs |> Enum.map(&Ansi.strip/1)}]
+        completed_steps: completed_steps ++ [%{step | logs: a_logs, result: status}],
+        status: :running
       )
 
     new_s = struct(state, build: new_b)
@@ -175,11 +176,14 @@ defmodule Crash.Build.Engine.Jobs.Instance do
 
     case body do
       %{"State" => %{"Status" => "running"}} ->
-        Process.sleep(500)
+        Process.sleep(250)
         exited?(container_id)
 
+      %{"State" => %{"Status" => "exited", "Dead" => false, "Error" => "", "ExitCode" => 0}} ->
+        {:ok, :success}
+
       _ ->
-        true
+        {:ok, :error}
     end
   end
 end
