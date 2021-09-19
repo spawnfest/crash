@@ -102,7 +102,7 @@ defmodule Crash.Build.Engine do
       state: :ready,
       completed_steps: [],
       repository: repository,
-      started: Time.utc_now(),
+      started: DateTime.utc_now(),
       ended: nil
     })
   end

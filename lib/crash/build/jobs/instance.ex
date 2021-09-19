@@ -104,7 +104,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
       ) do
     Logger.info("Stop #{inspect(__MODULE__)}... #{inspect(build)}")
 
-    new_build = %{build | ended: Time.utc_now(), state: :finished}
+    new_build = %{build | ended: DateTime.utc_now(), state: :finished}
     new_state = %{build_state | build: new_build}
 
     send(engine, {:update, self(), new_state})

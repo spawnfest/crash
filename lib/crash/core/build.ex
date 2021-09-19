@@ -12,8 +12,8 @@ defmodule Crash.Core.Build do
           state: :ready | :running | :finished,
           completed_steps: [Step.t()],
           volumes: String.t(),
-          started: Time.t(),
-          ended: Time.t()
+          started: DateTime.t(),
+          ended: DateTime.t()
         }
 
   @derive Jason.Encoder
