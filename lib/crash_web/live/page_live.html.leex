@@ -39,7 +39,7 @@
                 <div class="flex-col items-end flex-shrink-0 hidden space-y-3 sm:flex">
                   <p class="flex space-x-2 text-sm text-gray-500">
                     <span aria-hidden="true">&middot;</span>
-                    <span>Last deploy <%= Time.diff(Time.utc_now(), build.repository.commit.timestamp, :second) %> seconds ago</span>
+                    <span>Last deploy <%= Crash.Support.Time.format_duration(Timex.diff(DateTime.utc_now(), build.repository.commit.timestamp, :duration)) %> </span>
                   </p>
                 </div>
               </div>
@@ -107,9 +107,9 @@
                       <span class="block text-sm tracking-wide">
                         <i class="mr-2 far fa-clock fa-fw"></i>
                         <%= if is_nil(@build.ended) do %>
-                          Ran for: <span> <%= Time.diff(Time.utc_now(), @build.started) %> seconds</span>
+                          Ran for: <span> <%= Crash.Support.Time.format_duration(Timex.diff(DateTime.utc_now(), @build.started, :duration)) %></span>
                         <% else %>
-                          Execution time: <span> <%= Time.diff(@build.ended, @build.started) %> seconds</span>
+                          Execution time: <span> <%= Crash.Support.Time.format_duration(Timex.diff(@build.ended, @build.started, :duration)) %></span>
                         <% end %>
                       </span>
                       <span class="block text-sm">

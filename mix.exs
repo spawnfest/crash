@@ -46,6 +46,7 @@ defmodule Crash.MixProject do
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:tesla, "~> 1.4"},
+      {:timex, "~> 3.7"},
       {:yaml_elixir, "~> 2.8"},
       {:uuid, "~> 1.1"}
     ] ++ deps_dev()
