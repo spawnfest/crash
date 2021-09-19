@@ -1,6 +1,6 @@
 # Crash
 
-![Crash from Crash Bandicoot™](https://github.com/spawnfest/crash/blob/master/media/crash-bandicoot-image.png)
+![Crash from Crash Bandicoot™](https://github.com/spawnfest/crash/blob/master/media/crash-bandicoot-image.png =250x250)
 
 Crash is a simple (distributed) docker-on-docker Continuous Integration system writter in Elixir - SpawnFest 2021
 
