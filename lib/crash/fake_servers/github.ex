@@ -52,6 +52,34 @@ defmodule Crash.FakeServers.Github do
           - mix local.hex --force
           - mix local.rebar --force
           - mix test
+    """,
+    """
+    steps:
+      - name: clone
+        image: alpine/git:v2.26.2
+        commands:
+          - git clone https://github.com/spawnfest/crash --depth=1 .
+
+      - name: broken step
+        image: alpine/git:v2.26.2
+        commands:
+          - cecinestpasunepipe
+
+      - name: compile
+        image: elixir:1.12.3-alpine
+        commands:
+          - apk add git
+          - mix local.hex --force
+          - mix local.rebar --force
+          - mix compile
+
+      - name: specific test
+        image: elixir:1.12.3-alpine
+        commands:
+          - apk add git
+          - mix local.hex --force
+          - mix local.rebar --force
+          - mix test
     """
   ]
 

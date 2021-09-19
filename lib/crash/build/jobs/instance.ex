@@ -150,7 +150,12 @@ defmodule Crash.Build.Engine.Jobs.Instance do
 
     a_logs = body |> String.split("\r\n") |> Enum.map(&Ansi.strip/1)
 
-    new_p = struct(pipeline, steps: steps)
+    new_p =
+      if status == :success do
+        struct(pipeline, steps: steps)
+      else
+        struct(pipeline, steps: [])
+      end
 
     new_b =
       struct(build,
