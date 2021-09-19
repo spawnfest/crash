@@ -96,16 +96,29 @@ defmodule Crash.Build.Engine.Jobs.Instance do
     {:stop, :normal, :ok, state}
   end
 
-  @impl true
-  def handle_info(
-        :run,
-        %State{build: %Build{pipeline: %Pipeline{steps: []}} = build, engine: engine} =
-          build_state
-      ) do
+  defp stop_build(%State{build: build} = build_state) do
     Logger.info("Stop #{inspect(__MODULE__)}... #{inspect(build)}")
 
     new_build = %{build | ended: DateTime.utc_now(), state: :finished}
-    new_state = %{build_state | build: new_build}
+    %{build_state | build: new_build}
+  end
+
+  @impl true
+  def handle_info(:stop_job, %State{engine: engine} = build_state) do
+    new_state = stop_build(build_state)
+
+    send(engine, {:update, self(), new_state})
+
+    {:stop, :normal, new_state}
+  end
+
+  @impl true
+  def handle_info(
+        :run,
+        %State{build: %Build{pipeline: %Pipeline{steps: []}}, engine: engine} =
+          build_state
+      ) do
+    new_state = stop_build(build_state)
 
     send(engine, {:update, self(), new_state})
 
@@ -150,12 +163,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
 
     a_logs = body |> String.split("\r\n") |> Enum.map(&Ansi.strip/1)
 
-    new_p =
-      if status == :success do
-        struct(pipeline, steps: steps)
-      else
-        struct(pipeline, steps: [])
-      end
+    new_p = struct(pipeline, steps: steps)
 
     new_b =
       struct(build,
@@ -166,13 +174,22 @@ defmodule Crash.Build.Engine.Jobs.Instance do
 
     new_s = struct(state, build: new_b)
 
-    schedule_job()
+    if status == :success do
+      schedule_job()
+    else
+      stop_job()
+    end
 
     {:noreply, new_s}
   end
 
   defp schedule_job(run_in_millis \\ 0) do
     Process.send_after(self(), :run, run_in_millis)
+    :ok
+  end
+
+  defp stop_job(run_in_millis \\ 0) do
+    Process.send_after(self(), :stop_job, run_in_millis)
     :ok
   end
 
