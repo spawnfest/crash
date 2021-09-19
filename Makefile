@@ -1,5 +1,5 @@
 all: init
-.PHONY: init start up build shell shell-node install-deps compile halt test coverage format format-check check clean
+.PHONY: init start up build shell shell-node install-deps compile halt test coverage format format-check check commit master-node node-one node-two clean
 
 init: up install-deps compile
 
@@ -48,10 +48,10 @@ commit: container-crash												## Execute dynamic commit generation
 master-node:														## Start master node
 	docker-compose exec crash iex --sname master-node --cookie 98796e49-6e99-4b8f-8ee1-80c204723037 -S mix s
 
-node-1:
+node-one:															## Start first node connected to master
 	docker-compose exec crash-node-1 iex --sname node-1 --cookie 98796e49-6e99-4b8f-8ee1-80c204723037 -S mix
 
-node-2:
+node-two:															## Start second node connected to master
 	docker-compose exec crash-node-2 iex --sname node-2 --cookie 98796e49-6e99-4b8f-8ee1-80c204723037 -S mix
 
 clean:																## Shoutdown services
