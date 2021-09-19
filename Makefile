@@ -1,9 +1,9 @@
 all: init
-.PHONY: init start up build shell shell-node install-deps compile halt test coverage format format-check check commit master-node node-one node-two clean
+.PHONY: init start up build shell shell-node setup compile halt test coverage format format-check check commit master-node node-one node-two clean
 
-init: up install-deps compile
+init: up setup compile
 
-start: up install-deps compile migrate documentation				## Start application
+start: up setup compile												## Start application
 	docker-compose exec crash mix s
 
 up:																	## Start all services
@@ -18,8 +18,8 @@ shell: container-crash												## Enter into crash service
 shell-node: container-crash											## Enter into crash service with beam local-node name
 	docker-compose exec crash iex --sname local-node -S mix
 
-install-deps: container-crash										## Install crash dependencies
-	docker-compose exec crash mix deps.get
+setup: container-crash												## Install crash dependencies both FE and BE
+	docker-compose exec crash mix setup
 
 compile: container-crash											## Compile crash application
 	docker-compose exec crash mix cs

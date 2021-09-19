@@ -48,6 +48,45 @@ up                             Start all services
 
 ## How to USE
 
+#### setup the project
+
+```bash
+make init
+```
+
+### single instance
+
+```bash
+make start
+```
+
+#### open http://localhost:3000/
+
+#### simulate commit request
+
+``` bash
+make commit 
+```
+
+
+### multiple instances
+
+``` bash
+make master-node
+make node-one
+make node-two
+```
+
+#### open http://localhost:3000/
+
+#### simulate commit request
+
+``` bash
+make commit 
+```
+
+
+
 - TODO add description Here
 - TODO add UI image with some builds
 - TODO add console screenshot with multiple nodes
