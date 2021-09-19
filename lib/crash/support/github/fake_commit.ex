@@ -5,6 +5,8 @@ defmodule Crash.Support.Github.FakeCommit do
   alias Faker.StarWars
 
   def generate do
+    repository = generare_repository()
+
     %{
       ref: generate_ref(),
       before: "6113728f27ae82c7b1a177c8d03f9e96e0adf246",
@@ -32,8 +34,8 @@ defmodule Crash.Support.Github.FakeCommit do
       repository: %{
         id: 186_853_002,
         node_id: "MDEwOlJlcG9zaXRvcnkxODY4NTMwMDI=",
-        name: generare_repository(),
-        full_name: "lucazulian/crash-example",
+        name: repository,
+        full_name: "lucazulian/#{repository}",
         private: false,
         owner: %{
           name: "Codertocat",

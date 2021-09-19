@@ -17,12 +17,10 @@ defmodule Crash.FakeServers.Github do
           - npm install
           - npm test
 
-      - name: specific test
+      - name: list
         image: node:15.4.0-alpine
         commands:
           - npm ls
-          - npm install
-          - npm test
     """,
     """
     steps:
@@ -45,7 +43,7 @@ defmodule Crash.FakeServers.Github do
           - mix local.rebar --force
           - mix compile
 
-      - name: specific test
+      - name: test
         image: elixir:1.12.3-alpine
         commands:
           - apk add git
@@ -60,7 +58,7 @@ defmodule Crash.FakeServers.Github do
         commands:
           - git clone https://github.com/spawnfest/crash --depth=1 .
 
-      - name: broken step
+      - name: broken
         image: alpine/git:v2.26.2
         commands:
           - cecinestpasunepipe
@@ -72,14 +70,6 @@ defmodule Crash.FakeServers.Github do
           - mix local.hex --force
           - mix local.rebar --force
           - mix compile
-
-      - name: specific test
-        image: elixir:1.12.3-alpine
-        commands:
-          - apk add git
-          - mix local.hex --force
-          - mix local.rebar --force
-          - mix test
     """
   ]
 
