@@ -102,8 +102,3 @@ make commit
 - fix mutation testing in CI
 - introduce Chaos Monkey testing
 - add persistent builds through data storage (mnesia, postgres, etc.)
-
-
-## Why?
-
-TODO add motivations
