@@ -119,25 +119,23 @@ defmodule Crash.Build.Engine do
   end
 
   defp start_build(build) do
-    job_params = [build: build, process_uuid: :"#{build.id}", engine: self()]
-
     {pid, node} = fetch_supervisor_process()
 
     Logger.info(fn ->
       "Start build #{build.id} on node #{inspect(node)} with process #{inspect(pid)}"
     end)
 
-    Supervisor.start_remote_job(pid, job_params)
+    Supervisor.start_remote_job(pid, build: build, process_uuid: :"#{build.id}", engine: self())
   end
 
   defp fetch_supervisor_process do
     case length(Node.list()) do
       0 ->
-        {:global.whereis_name({Crash.Build.Engine.Jobs.Supervisor, Node.self()}), Node.self()}
+        {:global.whereis_name({Supervisor, Node.self()}), Node.self()}
 
       _ ->
         node = [Node.self() | Node.list()] |> Enum.random()
-        pid = :global.whereis_name({Crash.Build.Engine.Jobs.Supervisor, node})
+        pid = :global.whereis_name({Supervisor, node})
 
         {pid, node}
     end

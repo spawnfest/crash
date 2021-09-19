@@ -11,6 +11,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
   alias Crash.Docker.Images
   alias Crash.Docker.Volumes
   alias Crash.Support.Ansi
+  alias Crash.Support.Data
 
   defmodule State do
     @moduledoc false
@@ -45,7 +46,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
       process_uuid: Keyword.fetch!(opts, :process_uuid),
       build: Keyword.fetch!(opts, :build),
       engine: Keyword.fetch!(opts, :engine),
-      volume: volume
+      volume: Data.atomize_keys(volume)
     }
 
     GenServer.start_link(__MODULE__, state, name: {:global, state.process_uuid})
@@ -78,12 +79,11 @@ defmodule Crash.Build.Engine.Jobs.Instance do
   @doc false
   @impl GenServer
   def handle_call(:stop, _from, %State{} = state) do
-    # Stop the process with a normal reason
     {:stop, :normal, :ok, state}
   end
 
   defp stop_build(%State{build: build} = build_state) do
-    Logger.info("Stop #{inspect(__MODULE__)}... #{inspect(build)}")
+    Logger.info("Stop #{inspect(__MODULE__)} for #{inspect(build.id)}...")
 
     new_build = %{build | ended: DateTime.utc_now(), state: :finished}
     %{build_state | build: new_build}
@@ -119,12 +119,12 @@ defmodule Crash.Build.Engine.Jobs.Instance do
               pipeline: %Pipeline{steps: [step | steps]} = pipeline,
               completed_steps: completed_steps
             } = build,
-          volume: %{"Name" => name}
+          volume: %{Name: name}
         } = state
       ) do
-    Logger.info("Start #{inspect(__MODULE__)}...")
+    Logger.info("Start #{inspect(__MODULE__)} for #{inspect(build.id)}...")
 
-    _a = Images.pull(step.image)
+    _image = Images.pull(step.image)
 
     cmds = Enum.join(step.commands, ";")
 
@@ -140,24 +140,24 @@ defmodule Crash.Build.Engine.Jobs.Instance do
         HostConfig: %{Binds: ["#{name}:/app"]}
       })
 
-    _c = Containers.start(id)
+    _container = Containers.start(id)
 
-    {_, status} = exited?(id)
+    {_, status} = exited(id)
 
     {:ok, %Tesla.Env{body: body}} = Containers.logs(id)
 
-    a_logs = body |> String.split("\r\n") |> Enum.map(&Ansi.strip/1)
+    logs = body |> String.split("\r\n") |> Enum.map(&Ansi.strip/1)
 
-    new_p = struct(pipeline, steps: steps)
+    new_pipeline = struct(pipeline, steps: steps)
 
-    new_b =
+    new_build =
       struct(build,
-        pipeline: new_p,
-        completed_steps: completed_steps ++ [%{step | logs: a_logs, result: status}],
+        pipeline: new_pipeline,
+        completed_steps: completed_steps ++ [%{step | logs: logs, result: status}],
         status: :running
       )
 
-    new_s = struct(state, build: new_b)
+    new_state = struct(state, build: new_build)
 
     if status == :success do
       schedule_job()
@@ -165,7 +165,7 @@ defmodule Crash.Build.Engine.Jobs.Instance do
       stop_job()
     end
 
-    {:noreply, new_s}
+    {:noreply, new_state}
   end
 
   defp schedule_job(run_in_millis \\ 0) do
@@ -180,13 +180,13 @@ defmodule Crash.Build.Engine.Jobs.Instance do
     :ok
   end
 
-  defp exited?(container_id) do
+  defp exited(container_id) do
     {:ok, %Tesla.Env{body: body}} = Containers.status(container_id)
 
     case body do
       %{"State" => %{"Status" => "running"}} ->
-        Process.sleep(250)
-        exited?(container_id)
+        Process.sleep(100)
+        exited(container_id)
 
       %{"State" => %{"Status" => "exited", "Dead" => false, "Error" => "", "ExitCode" => 0}} ->
         {:ok, :success}

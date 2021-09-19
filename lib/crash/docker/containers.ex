@@ -32,6 +32,6 @@ defmodule Crash.Docker.Containers do
 
   @spec logs(String.t()) :: result
   def logs(id) do
-    Client.get("#{@base_uri}/#{id}/logs?stdout=true&stderr=true")
+    Client.get("#{@base_uri}/#{id}/logs?stdout=true&stderr=true&follow=1")
   end
 end
