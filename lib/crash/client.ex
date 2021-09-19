@@ -5,7 +5,7 @@ defmodule Crash.Client do
     Tesla.post(client, "/webhook/github", data)
   end
 
-  def client() do
+  def client do
     middleware = [
       {Tesla.Middleware.BaseUrl, "http://localhost:3000"},
       Tesla.Middleware.JSON

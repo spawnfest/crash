@@ -16,7 +16,7 @@ defmodule Mix.Tasks.GenerateCommit do
 
     case Client.client() |> Client.send_commit(commit) do
       {:ok, _} ->
-        IO.puts("Sent commit to Crash, look at the application for the progess...")
+        IO.puts("Sent commit to Crash, look at the application for progess...")
 
       {:error, reason} ->
         IO.puts("Error while sending commit to Crash: #{inspect(reason)}")
