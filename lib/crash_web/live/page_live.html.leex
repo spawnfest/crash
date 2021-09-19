@@ -84,7 +84,7 @@
                             <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                           </svg>
                         </span>
-                        <span class="block w-40 ml-3 text-sm truncate">
+                        <span class="block w-70 ml-3 text-sm">
                           username: <%= @build.repository.commit.author.username %>
                         </span>
                       </div>
@@ -92,7 +92,7 @@
                     <div class="flex flex-col space-y-3">
                       <div class="flex flex-row">
                         <i class="mr-2 text-lg fas fa-long-arrow-alt-right fa-fw"></i>
-                        <h3 class="block w-64 text-sm truncate">
+                        <h3 class="block w-64 text-sm">
                           message: <%= @build.repository.commit.message %>
                         </h3>
                       </div>

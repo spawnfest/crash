@@ -65,7 +65,8 @@ defmodule Crash.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:propcheck, "~> 1.1", only: [:test, :dev]},
       {:muzak, "~> 1.1", only: :test},
-      {:mock, "~> 0.3.7", only: :test}
+      {:mock, "~> 0.3.7", only: :test},
+      {:faker, "~> 0.16", only: [:test, :dev]}
     ]
   end
 
