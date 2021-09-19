@@ -1,9 +1,12 @@
 defmodule Crash.Support.Github.FakeCommit do
   @moduledoc false
 
+  alias Faker.Company.En
+  alias Faker.StarWars
+
   def generate do
     %{
-      ref: "refs/heads/master",
+      ref: generate_ref(),
       before: "6113728f27ae82c7b1a177c8d03f9e96e0adf246",
       after: "0000000000000000000000000000000000000000",
       created: false,
@@ -13,12 +16,12 @@ defmodule Crash.Support.Github.FakeCommit do
       compare: "https://github.com/Codertocat/Hello-World/compare/6113728f27ae...000000000000",
       commits: [],
       head_commit: %{
-        id: "ec26c3e57ca3a959ca5aad62de7213c562f8c821",
+        id: generate_head_commit_id(),
         tree_id: "31b122c26a97cf9af023e9ddab94a82c6e77b0ea",
-        message: "Update README.md",
-        timestamp: "2019-05-15T15:20:30Z",
+        message: genenate_message(),
+        timestamp: generate_timestamp(),
         author: %{
-          username: "Codertocat",
+          username: generate_username(),
           email: "21031067+Codertocat@users.noreply.github.com"
         },
         committer: %{
@@ -29,7 +32,7 @@ defmodule Crash.Support.Github.FakeCommit do
       repository: %{
         id: 186_853_002,
         node_id: "MDEwOlJlcG9zaXRvcnkxODY4NTMwMDI=",
-        name: "crash-example",
+        name: generare_repository(),
         full_name: "lucazulian/crash-example",
         private: false,
         owner: %{
@@ -154,5 +157,32 @@ defmodule Crash.Support.Github.FakeCommit do
         site_admin: false
       }
     }
+  end
+
+  defp normalize(string), do: string |> String.replace(" ", "-") |> String.downcase()
+
+  def generate_ref do
+    head = En.bs() |> normalize()
+    "refs/heads/#{head}"
+  end
+
+  def generare_repository do
+    StarWars.planet() |> normalize()
+  end
+
+  def genenate_message do
+    StarWars.quote()
+  end
+
+  def generate_head_commit_id do
+    UUID.uuid4()
+  end
+
+  def generate_username do
+    StarWars.character() |> normalize()
+  end
+
+  def generate_timestamp do
+    DateTime.now!("Etc/UTC") |> DateTime.add(-60, :second) |> DateTime.to_iso8601()
   end
 end
