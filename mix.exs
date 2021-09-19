@@ -63,7 +63,8 @@ defmodule Crash.MixProject do
       {:observer_cli, "~> 1.6", only: [:test, :dev]},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:propcheck, "~> 1.1", only: [:test, :dev]},
-      {:muzak, "~> 1.1", only: :test}
+      {:muzak, "~> 1.1", only: :test},
+      {:mock, "~> 0.3.7", only: :test}
     ]
   end
 
