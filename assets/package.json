@@ -14,7 +14,7 @@
     "postcss-preset-env": "^6.7.0",
     "strip-ansi-cli": "^3.0.2",
     "topbar": "^0.1.4",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^4.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
