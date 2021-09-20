@@ -33,7 +33,7 @@
     "sass": "^1.37.5",
     "sass-loader": "^8.0.2",
     "tailwindcss": "^2.2.7",
-    "terser-webpack-plugin": "^2.3.2",
+    "terser-webpack-plugin": "^4.2.3",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.2"
   }
